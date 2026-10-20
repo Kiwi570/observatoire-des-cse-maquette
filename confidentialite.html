@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Confidentialité · Observatoire des CSE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Mentions légales et politique de confidentialité de l’Observatoire des CSE, à compléter.">
+<meta name="theme-color" content="#F3EEE4">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Observatoire des CSE">
+<meta property="og:title" content="Confidentialité · Observatoire des CSE">
+<meta property="og:description" content="Mentions légales et politique de confidentialité de l’Observatoire des CSE, à compléter.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+<script>
+(function () {
+  var d = document.documentElement, calm = false, s = null;
+  d.lang = 'fr'; d.classList.add('js');
+  try { s = localStorage.getItem('ocse-calm'); } catch (e) {}
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  calm = s === '1' || (s !== '0' && reduced) || /[?&]calme=1/.test(location.search);
+  if (calm) d.classList.add('is-calm');
+  try { if (!calm && sessionStorage.getItem('ocse-pt') === '1') d.classList.add('pt-enter'); } catch (e) {}
+})();
+</script>
+<style>html.pt-enter body::after { content: ""; position: fixed; inset: 0; z-index: 150; background: #F3EEE4; animation: ptsafe 0s 2.4s forwards; } @keyframes ptsafe { to { visibility: hidden; } }</style>
+<script defer src="assets/vendor/gsap/gsap.min.js"></script>
+<script defer src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script defer src="assets/vendor/gsap/SplitText.min.js"></script>
+<script defer src="assets/vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script defer src="assets/vendor/lenis/lenis.js"></script>
+<script type="module" src="assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="header" data-header>
+  <div class="wrap header__in">
+    <a class="brand" href="./" aria-label="Observatoire des CSE, accueil"><img src="assets/img/site/logos/logo-ocse.webp" alt="Observatoire des CSE" width="955" height="172"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a class="link" href="enquete-rps-2026.html">L’enquête RPS 2026</a></li>
+        <li><a class="link" href="resultats.html">Résultats</a></li>
+        <li><a class="link" href="./#qui">Qui sommes-nous</a></li>
+        <li><button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+      </ul>
+      <a class="btn btn--primary btn--nav" href="enquete-rps-2026.html#inscription" data-magnetic><span class="btn__label">Je participe</span></a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="menu"><span aria-hidden="true"></span>Menu</button>
+    </nav>
+  </div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="menu__top">
+    <img src="assets/img/site/logos/logo-ocse-blanc.webp" alt="" width="955" height="172">
+    <button class="menu__close" type="button" data-menu-close>Fermer</button>
+  </div>
+  <ul class="menu__list">
+    <li><a href="./">Accueil</a></li>
+    <li><a href="enquete-rps-2026.html">L’enquête RPS 2026</a></li>
+    <li><a href="resultats.html">Résultats et études</a></li>
+    <li><a href="./#qui">Qui sommes-nous</a></li>
+    <li><button type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+  </ul>
+  <div class="menu__foot">
+    <a class="btn btn--primary" href="enquete-rps-2026.html#inscription">Je participe !</a>
+    <span class="copy__text">contact@observatoiredescse.fr</span>
+  </div>
+</div>
+
+<main id="contenu" data-page="legal">
+  <section class="phero" aria-labelledby="ph-t" style="padding-bottom:clamp(40px,5vw,72px)">
+    <i class="pa pa--gl" data-pulse style="--y:calc(var(--header-h) + 40px)"></i>
+    <div class="wrap">
+      <div class="phero__text" style="max-width:900px">
+        <p class="eyebrow" data-hero-in>Informations légales</p>
+        <h1 class="h1" id="ph-t" data-split>Confidentialité <em>et mentions légales.</em></h1>
+        <p class="lead" data-hero-in>Cette page est une structure à compléter par l’Observatoire des CSE avec son responsable de traitement et, le cas échéant, son délégué à la protection des données.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="wrap legal">
+      <nav class="legal__toc" aria-label="Sommaire">
+        <a class="link" href="#editeur">Éditeur du site</a>
+        <a class="link" href="#hebergement">Hébergement</a>
+        <a class="link" href="#formulaires">Données des formulaires</a>
+        <a class="link" href="#rps">Enquête RPS : données sensibles</a>
+        <a class="link" href="#droits">Vos droits</a>
+        <a class="link" href="#cookies">Cookies et stockage</a>
+      </nav>
+      <div class="legal__body">
+        <div class="alert">
+          <h3>Point d’attention avant toute mise en ligne</h3>
+          <p>L’enquête RPS 2026 recueille des réponses liées à la santé (risques psychosociaux) et au mandat syndical. Ces informations relèvent des catégories particulières de données de l’article 9 du RGPD : leur traitement suppose notamment le consentement explicite des répondants. Une analyse d’impact (article 35) est probablement requise. Le site actuel ne comporte ni mentions légales ni politique de confidentialité.</p>
+        </div>
+        <section id="editeur"><h2>Éditeur du site</h2><p>Raison sociale, forme juridique, adresse du siège, numéro d’immatriculation, directeur ou directrice de la publication <span class="tbc">à compléter</span></p><p>Contact : <span class="copy__text">contact@observatoiredescse.fr</span></p></section>
+        <section id="hebergement"><h2>Hébergement</h2><p>Nom, adresse et téléphone de l’hébergeur <span class="tbc">à compléter</span></p></section>
+        <section id="formulaires"><h2>Données collectées par les formulaires</h2>
+          <ul>
+            <li><b>Inscription à l’enquête RPS 2026</b> : adresse e-mail, certification du mandat, accord facultatif pour recevoir les actualités.</li>
+            <li><b>Avantages partenaires</b> : nom et prénom, fonction ou mandat, e-mail, téléphone, entreprise, adresse, effectif, avantages choisis.</li>
+            <li><b>Panel</b> : nom et prénom, mandat, e-mail, effectif, département et secteur de l’entreprise.</li>
+            <li><b>Résultats et contact</b> : prénom, nom, e-mail, objet et message.</li>
+          </ul>
+          <p>Pour chaque formulaire : finalité, base légale, destinataires (dont les partenaires qui fournissent les avantages), durée de conservation <span class="tbc">à compléter</span></p>
+        </section>
+        <section id="rps"><h2>Enquête RPS : données sensibles</h2><p>Informations à préciser : responsable du traitement, outil de collecte (Voxco, Akadys Sondage CSE), lieu d’hébergement des réponses, séparation entre l’adresse e-mail et les réponses, règles d’anonymisation et seuils de publication des résultats <span class="tbc">à compléter</span></p></section>
+        <section id="droits"><h2>Vos droits</h2><p>Accès, rectification, effacement, opposition, limitation, portabilité et retrait du consentement à tout moment, sur simple demande à l’adresse de contact ou au délégué à la protection des données <span class="tbc">à compléter</span>. Vous pouvez aussi adresser une réclamation à la CNIL.</p></section>
+        <section id="cookies"><h2>Cookies et stockage</h2><p>Cette maquette n’utilise aucun cookie. Elle mémorise seulement, dans votre navigateur, votre choix du mode calme et l’affichage de l’animation d’ouverture.</p></section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer night cover" id="contact">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <img src="assets/img/site/logos/logo-ocse-blanc.webp" alt="Observatoire des CSE" width="955" height="172" loading="lazy">
+      <p class="muted">Un outil de mesure régulier et continu des relations sociales dans l’entreprise.</p>
+    </div>
+    <div class="footer__col">
+      <h2>Le site</h2>
+      <a class="link" href="./">Accueil</a>
+      <a class="link" href="enquete-rps-2026.html">L’enquête RPS 2026</a>
+      <a class="link" href="resultats.html">Résultats et études</a>
+      <a class="link" href="./#qui">Qui sommes-nous</a>
+    </div>
+    <div class="footer__col">
+      <h2>Participer</h2>
+      <a class="link" href="enquete-rps-2026.html#inscription">Je participe</a>
+      <button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button>
+      <a class="link" href="resultats.html#recevoir">Recevoir les résultats</a>
+    </div>
+    <div class="footer__col footer__contact">
+      <h2>Nous écrire</h2>
+      <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+      <p class="muted">Téléphone et adresse postale <span class="tbc">à compléter</span></p>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Observatoire des CSE</span>
+      <a class="link" href="confidentialite.html">Confidentialité et mentions légales</a>
+      <span>Maquette de démonstration : formulaires simulés, aucun envoi.</span>
+    </div>
+  </div>
+</footer>
+<button class="calm-toggle" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
+<div class="drawer" id="drawer-panel" data-drawer="panel" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="drawer__top"><p class="eyebrow">Panel de l’Observatoire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="panel-title">Devenez panéliste <em>à l’Observatoire des CSE</em></h2>
+    <p class="muted">Inscrivez-vous pour participer aux prochaines enquêtes. Rôle du panel et fréquence des sollicitations <span class="tbc">à compléter</span></p>
+    <form class="form" data-form="panel" novalidate>
+      <div class="field"><label for="panel-nom">Nom et prénom</label><input id="panel-nom" name="nom" type="text" autocomplete="name"></div>
+      <div class="field"><label for="panel-mandat">Mandat</label>
+        <select id="panel-mandat" name="mandat">
+          <option value="">Choisissez une option</option>
+          <option>Titulaire au CSE</option><option>Suppléant au CSE</option><option>Représentant de proximité</option><option>Membre d’une CSSCT</option><option>Délégué syndical</option><option>Représentant syndical au CSE</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="field"><label for="panel-email">E-mail <span class="req">*</span></label><input id="panel-email" name="email" type="email" autocomplete="email" required inputmode="email"><span class="field__err" hidden>Indiquez une adresse e-mail valide, par exemple prenom.nom@exemple.fr.</span></div>
+      <div class="fields-2">
+        <div class="field"><label for="panel-effectif">Effectif de l’entreprise</label>
+          <select id="panel-effectif" name="effectif"><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
+        </div>
+        <div class="field"><label for="panel-dep">Département de l’entreprise</label><input id="panel-dep" name="departement" type="text" placeholder="57, Moselle"></div>
+      </div>
+      <div class="field"><label for="panel-secteur">Secteur d’activité de l’entreprise</label>
+        <select id="panel-secteur" name="secteur"><option value="">Choisissez une option</option><option>Industries</option><option>Construction</option><option>Commerce</option><option>Services</option><option>Service public</option><option>Autres</option></select>
+      </div>
+      <p class="sim-note">Listes de choix reprises de l’étude de 2019, à valider par l’Observatoire.</p>
+      <button class="btn btn--primary" type="submit">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci, c’est noté.</h3>
+      <p>Dans la version en ligne, votre inscription au panel serait enregistrée. Ici, rien n’a été envoyé.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

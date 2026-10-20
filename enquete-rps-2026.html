@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enquête RPS 2026 · Observatoire des CSE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Évaluation des facteurs de risques psychosociaux des représentants du personnel : qui peut répondre, comment participer, avantages et inscription.">
+<meta name="theme-color" content="#F3EEE4">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Observatoire des CSE">
+<meta property="og:title" content="Enquête RPS 2026 · Observatoire des CSE">
+<meta property="og:description" content="Évaluation des facteurs de risques psychosociaux des représentants du personnel : qui peut répondre, comment participer, avantages et inscription.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+<script>
+(function () {
+  var d = document.documentElement, calm = false, s = null;
+  d.lang = 'fr'; d.classList.add('js');
+  try { s = localStorage.getItem('ocse-calm'); } catch (e) {}
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  calm = s === '1' || (s !== '0' && reduced) || /[?&]calme=1/.test(location.search);
+  if (calm) d.classList.add('is-calm');
+  try { if (!calm && sessionStorage.getItem('ocse-pt') === '1') d.classList.add('pt-enter'); } catch (e) {}
+})();
+</script>
+<style>html.pt-enter body::after { content: ""; position: fixed; inset: 0; z-index: 150; background: #F3EEE4; animation: ptsafe 0s 2.4s forwards; } @keyframes ptsafe { to { visibility: hidden; } }</style>
+<script defer src="assets/vendor/gsap/gsap.min.js"></script>
+<script defer src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script defer src="assets/vendor/gsap/SplitText.min.js"></script>
+<script defer src="assets/vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script defer src="assets/vendor/lenis/lenis.js"></script>
+<script type="module" src="assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="header" data-header>
+  <div class="wrap header__in">
+    <a class="brand" href="./" aria-label="Observatoire des CSE, accueil"><img src="assets/img/site/logos/logo-ocse.webp" alt="Observatoire des CSE" width="955" height="172"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a class="link" href="enquete-rps-2026.html" aria-current="page">L’enquête RPS 2026</a></li>
+        <li><a class="link" href="resultats.html">Résultats</a></li>
+        <li><a class="link" href="./#qui">Qui sommes-nous</a></li>
+        <li><button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+      </ul>
+      <a class="btn btn--primary btn--nav" href="enquete-rps-2026.html#inscription" data-magnetic><span class="btn__label">Je participe</span></a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="menu"><span aria-hidden="true"></span>Menu</button>
+    </nav>
+  </div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="menu__top">
+    <img src="assets/img/site/logos/logo-ocse-blanc.webp" alt="" width="955" height="172">
+    <button class="menu__close" type="button" data-menu-close>Fermer</button>
+  </div>
+  <ul class="menu__list">
+    <li><a href="./">Accueil</a></li>
+    <li><a href="enquete-rps-2026.html">L’enquête RPS 2026</a></li>
+    <li><a href="resultats.html">Résultats et études</a></li>
+    <li><a href="./#qui">Qui sommes-nous</a></li>
+    <li><button type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+  </ul>
+  <div class="menu__foot">
+    <a class="btn btn--primary" href="enquete-rps-2026.html#inscription">Je participe !</a>
+    <span class="copy__text">contact@observatoiredescse.fr</span>
+  </div>
+</div>
+
+<main id="contenu" data-page="enquete">
+
+  <section class="phero" aria-labelledby="ph-t">
+    <i class="pa pa--gl" data-pulse style="--y:calc(var(--header-h) + 40px)"></i>
+    <div class="wrap phero__grid">
+      <div class="phero__text">
+        <p class="eyebrow" data-hero-in>Enquête nationale RPS 2026</p>
+        <h1 class="h1" id="ph-t" data-hero-title data-split>Évaluation des facteurs de risques psychosociaux <em>des représentants du personnel.</em></h1>
+        <p class="lead" data-hero-in>Vous souhaitez participer à notre nouvelle enquête sur les risques psychosociaux des élus de CSE ?</p>
+        <div class="phero__chips" data-hero-in><span class="chip">1re édition · septembre 2026</span><span class="chip">Reconduction annuelle</span><span class="chip">Restitution · 10 et 11 mars 2027</span></div>
+        <div class="row" style="--gap:14px 22px" data-hero-in>
+          <a class="btn btn--primary btn--big" href="#inscription" data-magnetic><span class="btn__label">Je participe !</span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="link link--under" href="#qui-repond">Puis-je répondre ?</a>
+        </div>
+      </div>
+      <div class="phero__media" data-hero-in>
+        <figure class="media" data-img="rps-hero" data-img-m="rps-hero-mobile" data-ph="room" data-parallax></figure>
+        <div class="banner-card phero__banner" data-tilt><img src="assets/img/site/bannieres/banniere-rps-1200.webp" srcset="assets/img/site/bannieres/banniere-rps-760.webp 760w, assets/img/site/bannieres/banniere-rps-1200.webp 1200w, assets/img/site/bannieres/banniere-rps-1890.webp 1890w" sizes="(max-width: 899px) 90vw, 40vw" width="1200" height="238" alt="Bannière de l’enquête : évaluation des facteurs de risques psychosociaux des représentants du personnel, enquête nationale RPS 2026"></div>
+      </div>
+    </div>
+    <i class="pa pa--gl" data-pulse style="--y:calc(100% - 20px)"></i>
+  </section>
+
+  <section class="section" id="pourquoi" aria-labelledby="why-t">
+    <div class="wrap why__grid">
+      <div class="why__media"><figure class="media media--ar45" data-img="rps-pourquoi" data-ph="room" data-reveal="clip"></figure></div>
+      <div class="why__text">
+        <p class="eyebrow">Pourquoi cette enquête</p>
+        <h2 class="h1" id="why-t" data-split>Écouter, mesurer et prévenir <em>les risques propres au mandat.</em></h2>
+        <div class="prose"><p>L’enquête mesure l’exposition aux risques psychosociaux propres à l’exercice du mandat. Elle produit des données publiques, opposables et citables, pour éclairer le débat sur les conditions d’exercice du mandat et outiller la prévention.</p><p>Première édition en septembre 2026, puis reconduction chaque année avec un socle d’items stable, afin de suivre les évolutions dans la durée.</p></div>
+        <div class="stamps stamps--big" data-stamps aria-hidden="true"><span class="stamp" style="--r:-4deg">Publiques</span><span class="stamp" style="--r:3deg">Opposables</span><span class="stamp" style="--r:-2deg">Citables</span></div>
+      </div>
+    </div>
+    <i class="pa pa--gl" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="section band" id="qui-repond" aria-labelledby="elig-t">
+    <i class="pa pa--gl" data-pulse style="--y:30px"></i>
+    <div class="wrap">
+      <div class="cal__head">
+        <p class="eyebrow">Qui peut répondre</p>
+        <h2 class="h1" id="elig-t" data-split>Toute personne qui détient <em>un mandat.</em></h2>
+        <p class="lead muted">Mandat de représentation du personnel ou mandat syndical, à titre individuel et volontaire.</p>
+      </div>
+      <div class="elig">
+        <div class="elig__tool" data-elig>
+          <p class="elig__q" id="elig-q1">Quel mandat exercez-vous actuellement ?</p>
+          <div class="opts" role="group" aria-labelledby="elig-q1">
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Titulaire au CSE</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Suppléant au CSE</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Représentant de proximité</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Membre d’une CSSCT</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Délégué syndical</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="yes">Représentant syndical au CSE</button>
+            <button class="opt" type="button" aria-pressed="false" data-elig-opt="no">Aucun mandat actuellement</button>
+          </div>
+          <div class="elig__res" data-elig-res aria-live="polite">
+            <h3>Choisissez votre mandat</h3>
+            <p>La réponse s’affiche ici.</p>
+          </div>
+          <div class="elig__res">
+            <h3>Faut-il l’accord de votre employeur, de votre syndicat ou de votre CSE ?</h3>
+            <p>Non. Vous répondez à titre individuel et volontaire, indépendamment de toute démarche engagée par votre employeur, votre syndicat ou votre CSE.</p>
+          </div>
+          <p class="sim-note">Liste des mandats reprise de l’article de 2021, à valider par l’Observatoire.</p>
+        </div>
+        <div class="elig__media"><figure class="media media--ar32" data-img="rps-qui" data-ph="crowd" data-reveal="clip"></figure></div>
+      </div>
+    </div>
+    <i class="pa pa--gl" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="section" id="comment" aria-labelledby="how-t">
+    <div class="wrap">
+      <div class="cal__head">
+        <p class="eyebrow">Comment ça se passe</p>
+        <h2 class="h1" id="how-t" data-split>Quatre étapes, <em>un seul e-mail.</em></h2>
+      </div>
+      <div style="position:relative">
+      <i class="pa pa--w" data-pulse style="--x:calc(var(--g) * -.58);--y:7px"></i>
+      <ol class="hsteps">
+        <li class="hstep"><span class="hstep__dot" data-pulse data-pulse-beat></span><span class="hstep__n">01</span><h3>Vous laissez votre adresse e-mail</h3><p>Le lien vers le questionnaire vous est envoyé immédiatement.</p></li>
+        <li class="hstep"><span class="hstep__dot" data-pulse data-pulse-beat></span><span class="hstep__n">02</span><h3>Vous certifiez votre mandat</h3><p>Vous certifiez exercer actuellement un mandat de représentant du personnel.</p></li>
+        <li class="hstep"><span class="hstep__dot" data-pulse data-pulse-beat></span><span class="hstep__n">03</span><h3>Vous répondez au questionnaire</h3><p>Durée <span class="tbc">à compléter</span></p></li>
+        <li class="hstep"><span class="hstep__dot" data-pulse data-pulse-beat></span><span class="hstep__n">04</span><h3>Vous choisissez vos avantages</h3><p>Formation, abonnement ou accès VIP à la restitution.</p></li>
+      </ol>
+      <i class="pa pa--w" data-pulse style="--x:calc(100% + var(--g) * .58);--y:7px"></i>
+      </div>
+    </div>
+    <i class="pa pa--gl pa--n" data-pulse style="--y:calc(100% - 30px)"></i>
+    <i class="pa pa--gr pa--w" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="section band" id="garanties" aria-labelledby="gar-t">
+    <div class="wrap">
+      <div class="cal__head">
+        <p class="eyebrow">Vos garanties</p>
+        <h2 class="h1" id="gar-t" data-split>Répondre <em>en toute indépendance.</em></h2>
+      </div>
+      <div class="guarantees">
+        <div class="guarantees__list">
+          <div class="g-item"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 27c1.5-6 5.5-9 10-9s8.5 3 10 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><h3>Individuel et volontaire</h3><p>Vous décidez seul de répondre, à titre personnel.</p></div>
+          <div class="g-item"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M4 15h22M15 4v22" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="15" r="11" fill="none" stroke-width="1.5" style="stroke:var(--coral)"/></svg><h3>Indépendant</h3><p>Indépendamment de toute démarche engagée par votre employeur, votre syndicat ou votre CSE.</p></div>
+          <div class="g-item"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="7" y="13" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 13V9a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><h3>Anonymat des réponses</h3><p>Garanti pour les enquêtes de l’Observatoire selon l’article de 2021. Engagement pour l’édition 2026 <span class="tbc">à confirmer</span></p></div>
+          <div class="g-item"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3l10 4v7c0 7-4.5 11-10 13C9.5 25 5 21 5 14V7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><h3>Données sensibles</h3><p>Les réponses touchent à la santé et au mandat syndical. Mentions RGPD et consentement explicite <span class="tbc">à rédiger</span> <a class="link link--under" href="confidentialite.html">En savoir plus</a></p></div>
+        </div>
+        <div class="guarantees__media"><figure class="media media--ar45" data-img="rps-garanties" data-ph="paper" data-reveal="clip"></figure></div>
+      </div>
+    </div>
+    <i class="pa pa--gr" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="section" id="avantages" aria-labelledby="adv-t">
+    <i class="pa pa--gr" data-pulse style="--y:24px"></i>
+    <div class="wrap">
+      <div class="adv__head">
+        <div>
+          <p class="eyebrow">Pour vous remercier</p>
+          <h2 class="h1" id="adv-t" data-split>Nos partenaires vous offrent <em>des avantages exclusifs.</em></h2>
+        </div>
+        <p class="muted" style="max-width:34ch;margin:0">Après votre participation. Conditions d’attribution <span class="tbc">à compléter</span></p>
+      </div>
+      <div class="adv__grid">
+  <article class="gift" data-tilt>
+    <div class="gift__art">
+      <svg viewBox="0 0 500 400" aria-hidden="true" data-art>
+        <rect x="0" y="0" width="500" height="400" style="fill:var(--paper-deep)"/>
+        <rect class="d" x="120" y="96" width="260" height="168" rx="12" stroke-width="2" style="fill:var(--paper);stroke:var(--ink)"/>
+        <path class="d" d="M96 284h308l-22 22H118z" stroke-width="2" stroke-linejoin="round" style="fill:var(--paper);stroke:var(--ink)"/>
+        <circle class="d" cx="250" cy="180" r="52" fill="none" stroke-width="1.5" style="stroke:var(--ink)"/>
+        <path class="d" d="M250 128A52 52 0 0 1 300.2 166.5" fill="none" stroke-width="7" stroke-linecap="round" style="stroke:var(--coral)"/>
+        <path class="d" d="M250 180V146M250 180l26 9" fill="none" stroke-width="2" stroke-linecap="round" style="stroke:var(--ink)"/>
+        <text x="250" y="252" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="2" style="fill:var(--ink)">2 H 30 · À DISTANCE</text>
+      </svg>
+      <span class="gift__logo"><img src="assets/img/site/partenaires/alinea.webp" alt="Alinea" width="407" height="155" loading="lazy"></span>
+    </div>
+    <div class="gift__body">
+      <span class="gift__val">Valeur <span class="odo" data-odo="199">199</span> €</span>
+      <h3 class="gift__t">1 formation en distanciel de 2 h 30, gratuite</h3>
+      <p class="gift__d">Offerte par Alinea.</p>
+    </div>
+    <span class="gift__glare" aria-hidden="true"></span>
+  </article>
+  <article class="gift" data-tilt>
+    <div class="gift__art">
+      <svg viewBox="0 0 500 400" aria-hidden="true" data-art>
+        <rect x="0" y="0" width="500" height="400" style="fill:var(--paper-deep)"/>
+        <g transform="rotate(-9 250 210)"><rect class="d" x="150" y="86" width="190" height="250" rx="6" stroke-width="1.5" style="fill:var(--paper);stroke:var(--ink)"/></g>
+        <g transform="rotate(-3 250 210)"><rect class="d" x="158" y="80" width="190" height="250" rx="6" stroke-width="1.5" style="fill:var(--paper);stroke:var(--ink)"/></g>
+        <g transform="rotate(5 250 210)">
+          <rect class="d" x="166" y="76" width="190" height="250" rx="6" stroke-width="2" style="fill:var(--paper);stroke:var(--ink)"/>
+          <rect x="166" y="76" width="190" height="64" rx="6" style="fill:var(--coral)"/>
+          <path class="d" d="M186 166h150M186 186h120M186 206h140M186 246h90M186 266h130M186 286h110" stroke-width="2" stroke-linecap="round" opacity=".5" style="stroke:var(--ink)"/>
+        </g>
+        <text x="250" y="374" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="2" style="fill:var(--ink)">ABONNEMENT · 1 AN</text>
+      </svg>
+      <span class="gift__logo"><img src="assets/img/site/partenaires/influence-cse.webp" alt="Influence!CSE" width="151" height="34" loading="lazy"></span>
+    </div>
+    <div class="gift__body">
+      <span class="gift__val">Valeur <span class="odo" data-odo="129">129</span> €</span>
+      <h3 class="gift__t">Abonnement d’1 an au magazine Influence!CSE</h3>
+      <p class="gift__d">Offert par Influence!CSE.</p>
+    </div>
+    <span class="gift__glare" aria-hidden="true"></span>
+  </article>
+  <article class="gift" data-tilt>
+    <div class="gift__art">
+      <svg viewBox="0 0 500 400" aria-hidden="true" data-art>
+        <rect x="0" y="0" width="500" height="400" style="fill:var(--night)"/>
+        <ellipse class="d" cx="250" cy="196" rx="200" ry="122" fill="none" stroke-width="1.2" style="stroke:var(--on-night-soft)"/>
+        <ellipse class="d" cx="250" cy="196" rx="170" ry="102" fill="none" stroke-width="1.2" style="stroke:var(--on-night-soft)"/>
+        <ellipse class="d" cx="250" cy="196" rx="140" ry="82" fill="none" stroke-width="1.2" style="stroke:var(--on-night-soft)"/>
+        <rect class="d" x="185" y="160" width="130" height="72" fill="none" stroke-width="1.2" stroke-dasharray="3 5" style="stroke:var(--on-night)"/>
+        <circle cx="402" cy="160" r="9" style="fill:var(--coral)"/>
+        <circle cx="402" cy="160" r="18" fill="none" stroke-width="1.5" opacity=".6" style="stroke:var(--coral)"/>
+        <text x="250" y="364" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="2" style="fill:var(--on-night)">ACCÈS VIP · RESTITUTION</text>
+      </svg>
+      <span class="gift__logo"><img src="assets/img/site/partenaires/eluceo.webp" alt="Eluceo" width="566" height="295" loading="lazy"></span>
+    </div>
+    <div class="gift__body">
+      <span class="gift__val">10 et 11 mars 2027</span>
+      <h3 class="gift__t">Un accès VIP au Stade de France pour la restitution des résultats</h3>
+      <p class="gift__d">Offert par Eluceo.</p>
+    </div>
+    <span class="gift__glare" aria-hidden="true"></span>
+  </article>
+</div>
+
+    </div>
+    <i class="pa pa--gr" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="section band" id="inscription" aria-labelledby="ins-t">
+    <i class="pa pa--gl" data-pulse style="--y:30px"></i>
+    <div class="wrap">
+      <div class="cal__head">
+        <p class="eyebrow">Inscription</p>
+        <h2 class="h1" id="ins-t" data-split>Recevez le lien <em>du questionnaire.</em></h2>
+      </div>
+      <div class="signup">
+        <div class="signup__form" data-signup>
+          <div class="progress" aria-hidden="true">
+            <div class="progress__bar"><svg viewBox="0 0 300 26" preserveAspectRatio="none"><path d="M0 16H70l6-12 7 20 6-14 4 6H170l6-12 7 20 6-14 4 6H270l6-12 7 20 6-14 4 6" style="stroke:var(--rule)"/><path data-progress-path d="M0 16H70l6-12 7 20 6-14 4 6H170l6-12 7 20 6-14 4 6H270l6-12 7 20 6-14 4 6" style="stroke:var(--coral)"/></svg></div>
+            <span class="progress__label num" data-progress-label>Étape 1 sur 3</span>
+          </div>
+          <form class="form" data-form="signup" novalidate>
+            <div class="fstep" data-fstep="1">
+              <h3 class="fstep__t">Votre adresse e-mail</h3>
+              <p class="muted" style="margin:0">Renseignez votre adresse e-mail pour recevoir immédiatement le lien et répondre au questionnaire.</p>
+              <div class="field"><label for="ins-email">E-mail <span class="req">*</span></label><input id="ins-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="prenom.nom@exemple.fr"><span class="field__err" hidden>Indiquez une adresse e-mail valide, par exemple prenom.nom@exemple.fr.</span></div>
+              <div class="fstep__nav"><button class="btn btn--primary" type="button" data-next>Continuer</button></div>
+            </div>
+            <div class="fstep" data-fstep="2" hidden>
+              <h3 class="fstep__t">Votre mandat</h3>
+              <label class="check" for="ins-cert"><input id="ins-cert" name="certif" type="checkbox" required><span>Je certifie exercer actuellement un mandat de représentant du personnel et être, à ce titre, habilité(e) à participer à cette enquête sur les risques psychosociaux. <span class="req">*</span></span></label>
+              <span class="field__err" data-cert-err hidden>Cochez cette case pour continuer : l’enquête s’adresse aux personnes qui exercent actuellement un mandat.</span>
+              <label class="check" for="ins-news"><input id="ins-news" name="news" type="checkbox"><span>J’accepte de recevoir par email les actualités, ressources, nouvelles enquêtes et offres de L’observatoire des CSE.</span></label>
+              <p class="sim-note">Politique de confidentialité et consentement au traitement des données sensibles à ajouter ici.</p>
+              <div class="fstep__nav"><button class="btn btn--primary" type="submit">Envoyer</button><button class="back" type="button" data-prev>Retour</button></div>
+            </div>
+            <div class="fstep" data-fstep="3" hidden tabindex="-1">
+              <h3 class="fstep__t">C’est noté, merci.</h3>
+              <p style="margin:0">Dans la version en ligne, le lien du questionnaire serait envoyé immédiatement à <b data-echo-email>votre adresse</b>.</p>
+              <p class="sim-note">Maquette : aucun e-mail n’a été envoyé.</p>
+              <div class="fstep__nav"><a class="btn btn--ghost" href="#avantages">Revoir les avantages</a><button class="back" type="button" data-restart>Recommencer</button></div>
+            </div>
+          </form>
+        </div>
+        <div class="signup__media"><figure class="media media--ar45" data-img="rps-inscription" data-ph="room" data-reveal="clip"></figure></div>
+      </div>
+    </div>
+    <i class="pa pa--gl" data-pulse style="--y:calc(100% - 30px)"></i>
+  </section>
+
+  <section class="final" aria-labelledby="final-t">
+    <div class="wrap final__in">
+      <p class="eyebrow">Restitution</p>
+      <h2 class="h1" id="final-t" data-split>Les résultats dans <em><span class="num" data-days-to="2027-03-10" data-days-fmt="n">141</span> jours.</em></h2>
+      <p class="lead">Les 10 et 11 mars 2027 au Stade de France. Recevez-les aussi par e-mail.</p>
+      <div class="final__cta">
+        <a class="btn btn--primary btn--big" href="resultats.html#recevoir" data-magnetic><span class="btn__label">Recevoir les résultats</span></a>
+        <a class="btn btn--ghost btn--big" href="resultats.html">Voir la 1re étude</a>
+      </div>
+    </div>
+    <i class="pa pa--gl" data-pulse style="--y:calc(100% - 100px)"></i>
+    <i class="pa" data-pulse data-pulse-amp="6" style="--x:40%;--y:calc(100% - 60px)"></i>
+    <i class="pa" data-pulse data-pulse-amp="6" style="--x:calc(100% - var(--g) * 1.2);--y:calc(100% - 44px)"></i>
+  </section>
+</main>
+
+<footer class="footer night cover" id="contact">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <img src="assets/img/site/logos/logo-ocse-blanc.webp" alt="Observatoire des CSE" width="955" height="172" loading="lazy">
+      <p class="muted">Un outil de mesure régulier et continu des relations sociales dans l’entreprise.</p>
+    </div>
+    <div class="footer__col">
+      <h2>Le site</h2>
+      <a class="link" href="./">Accueil</a>
+      <a class="link" href="enquete-rps-2026.html">L’enquête RPS 2026</a>
+      <a class="link" href="resultats.html">Résultats et études</a>
+      <a class="link" href="./#qui">Qui sommes-nous</a>
+    </div>
+    <div class="footer__col">
+      <h2>Participer</h2>
+      <a class="link" href="enquete-rps-2026.html#inscription">Je participe</a>
+      <button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button>
+      <a class="link" href="resultats.html#recevoir">Recevoir les résultats</a>
+    </div>
+    <div class="footer__col footer__contact">
+      <h2>Nous écrire</h2>
+      <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+      <p class="muted">Téléphone et adresse postale <span class="tbc">à compléter</span></p>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Observatoire des CSE</span>
+      <a class="link" href="confidentialite.html">Confidentialité et mentions légales</a>
+      <span>Maquette de démonstration : formulaires simulés, aucun envoi.</span>
+    </div>
+  </div>
+</footer>
+<button class="calm-toggle" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
+<div class="drawer" id="drawer-panel" data-drawer="panel" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="drawer__top"><p class="eyebrow">Panel de l’Observatoire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="panel-title">Devenez panéliste <em>à l’Observatoire des CSE</em></h2>
+    <p class="muted">Inscrivez-vous pour participer aux prochaines enquêtes. Rôle du panel et fréquence des sollicitations <span class="tbc">à compléter</span></p>
+    <form class="form" data-form="panel" novalidate>
+      <div class="field"><label for="panel-nom">Nom et prénom</label><input id="panel-nom" name="nom" type="text" autocomplete="name"></div>
+      <div class="field"><label for="panel-mandat">Mandat</label>
+        <select id="panel-mandat" name="mandat">
+          <option value="">Choisissez une option</option>
+          <option>Titulaire au CSE</option><option>Suppléant au CSE</option><option>Représentant de proximité</option><option>Membre d’une CSSCT</option><option>Délégué syndical</option><option>Représentant syndical au CSE</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="field"><label for="panel-email">E-mail <span class="req">*</span></label><input id="panel-email" name="email" type="email" autocomplete="email" required inputmode="email"><span class="field__err" hidden>Indiquez une adresse e-mail valide, par exemple prenom.nom@exemple.fr.</span></div>
+      <div class="fields-2">
+        <div class="field"><label for="panel-effectif">Effectif de l’entreprise</label>
+          <select id="panel-effectif" name="effectif"><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
+        </div>
+        <div class="field"><label for="panel-dep">Département de l’entreprise</label><input id="panel-dep" name="departement" type="text" placeholder="57, Moselle"></div>
+      </div>
+      <div class="field"><label for="panel-secteur">Secteur d’activité de l’entreprise</label>
+        <select id="panel-secteur" name="secteur"><option value="">Choisissez une option</option><option>Industries</option><option>Construction</option><option>Commerce</option><option>Services</option><option>Service public</option><option>Autres</option></select>
+      </div>
+      <p class="sim-note">Listes de choix reprises de l’étude de 2019, à valider par l’Observatoire.</p>
+      <button class="btn btn--primary" type="submit">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci, c’est noté.</h3>
+      <p>Dans la version en ligne, votre inscription au panel serait enregistrée. Ici, rien n’a été envoyé.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
