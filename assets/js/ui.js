@@ -8,18 +8,10 @@ export { store };
 export function initHeader(lenis) {
   const h = document.querySelector('[data-header]');
   if (!h) return;
-  let last = 0;
-  const onScroll = (y) => {
-    h.classList.toggle('is-solid', y > 30);
-    const menuOpen = !document.getElementById('menu')?.hidden;
-    if (y > 320 && y > last + 4 && !menuOpen) h.classList.add('is-hidden');
-    else if (y < last - 4 || y < 320) h.classList.remove('is-hidden');
-    last = y;
-  };
+  const onScroll = (y) => { h.classList.toggle('is-solid', y > 30); };
   if (lenis) lenis.on('scroll', ({ scroll }) => onScroll(scroll));
   else window.addEventListener('scroll', () => onScroll(window.scrollY), { passive: true });
   onScroll(window.scrollY);
-  h.addEventListener('focusin', () => h.classList.remove('is-hidden'));
 }
 
 function trapFocus(container, e) {
@@ -47,18 +39,27 @@ export function initOverlays({ gsap, lenis, calm }) {
     else done();
   };
   const menu = document.getElementById('menu');
-  document.querySelectorAll('[data-menu-open]').forEach((b) => b.addEventListener('click', () => { b.setAttribute('aria-expanded', 'true'); openLayer(menu, '.menu__close'); }));
-  menu?.querySelectorAll('[data-menu-close], .menu__list a').forEach((b) => b.addEventListener('click', () => { document.querySelector('[data-menu-open]')?.setAttribute('aria-expanded', 'false'); closeLayer(menu); }));
+  const menuBtn = document.querySelector('[data-menu-open]');
+  const closeMenu = (focusBack = true) => {
+    if (!menu || menu.hidden) return;
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    menu.hidden = true; document.documentElement.style.overflow = ''; lenis?.start();
+    if (focusBack) menuBtn?.focus();
+  };
+  menuBtn?.addEventListener('click', () => { menuBtn.setAttribute('aria-expanded', 'true'); openLayer(menu, '.menu__close'); });
+  menu?.querySelectorAll('[data-menu-close]').forEach((b) => b.addEventListener('click', () => closeMenu(true)));
+  menu?.querySelectorAll('.menu__list a').forEach((b) => b.addEventListener('click', () => closeMenu(false)));
   document.querySelectorAll('[data-drawer-open]').forEach((b) => b.addEventListener('click', () => {
     const d = document.querySelector(`[data-drawer="${b.dataset.drawerOpen}"]`);
-    if (!menu.hidden) { menu.hidden = true; }
-    if (d) openLayer(d, 'input');
+    const fromMenu = menu && !menu.hidden && menu.contains(b);
+    if (fromMenu) closeMenu(false);
+    if (d) { openLayer(d, 'input, textarea'); if (fromMenu) opener = menuBtn; }
   }));
   document.querySelectorAll('[data-drawer]').forEach((d) => d.querySelectorAll('[data-drawer-close]').forEach((b) => b.addEventListener('click', () => closeLayer(d))));
   document.addEventListener('keydown', (e) => {
-    const open = [menu, ...document.querySelectorAll('[data-drawer]')].find((x) => x && !x.hidden);
+    const open = [...document.querySelectorAll('[data-drawer]'), menu].find((x) => x && !x.hidden);
     if (!open) return;
-    if (e.key === 'Escape') { open === menu ? closeLayer(menu) : closeLayer(open); }
+    if (e.key === 'Escape') { if (open === menu) closeMenu(true); else closeLayer(open); }
     if (e.key === 'Tab') trapFocus(open, e);
   });
 }
@@ -66,20 +67,26 @@ export function initOverlays({ gsap, lenis, calm }) {
 export function initCopy() {
   document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => {
     const txt = b.dataset.copy, label = b.textContent;
-    const ok = () => { b.textContent = 'Copié'; setTimeout(() => { b.textContent = label; }, 1600); };
+    const live = document.querySelector('[data-live]');
+    const say = (t) => { if (live) { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); } };
+    const ok = () => { b.textContent = 'Copié'; say('Adresse copiée'); setTimeout(() => { b.textContent = label; }, 1600); };
     const fallback = () => { const t = b.parentElement.querySelector('.copy__text'); if (t) { const r = document.createRange(); r.selectNodeContents(t); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } b.textContent = 'Sélectionné'; setTimeout(() => { b.textContent = label; }, 1600); };
     try { navigator.clipboard.writeText(txt).then(ok, fallback); } catch (e) { fallback(); }
   }));
 }
 
 export function initCalmToggle(calm) {
-  const b = document.querySelector('[data-calm]');
-  if (!b) return;
-  b.setAttribute('aria-pressed', calm ? 'true' : 'false');
-  b.addEventListener('click', () => {
-    store.set('ocse-calm', calm ? '0' : '1');
-    const u = new URL(location.href); u.searchParams.delete('calme');
-    location.replace(u.pathname + u.search + u.hash);
+  document.querySelectorAll('[data-calm]').forEach((b) => {
+    b.setAttribute('aria-pressed', calm ? 'true' : 'false');
+    b.addEventListener('click', () => {
+      store.set('ocse-calm', calm ? '0' : '1');
+      // revenir à la même section après le rechargement
+      const y = window.innerHeight * 0.35;
+      const sec = [...document.querySelectorAll('main section[id], main > section')].find((el) => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+      if (sec && sec.id) store.set('ocse-back', sec.id, 'session');
+      const u = new URL(location.href); u.searchParams.delete('calme');
+      location.replace(u.pathname + u.search);
+    });
   });
 }
 
@@ -166,7 +173,16 @@ export function initTransitions({ gsap, calm }) {
     const url = new URL(a.href, location.href);
     if (url.origin !== location.origin) return;
     const samePage = url.pathname.replace(/(index)?(\.html)?$/, '') === location.pathname.replace(/(index)?(\.html)?$/, '');
-    if (samePage) return; // ancres internes : défilement normal
+    if (samePage) {
+      const id = url.hash ? decodeURIComponent(url.hash.slice(1)) : '';
+      const el = id && document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      const host = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
+      if (window.__lenis) window.__lenis.scrollTo(host, { duration: 1.4 }); else host.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', url.hash);
+      return;
+    }
     e.preventDefault();
     store.set('ocse-pt', '1', 'session');
     pt.classList.add('is-on');
@@ -176,4 +192,22 @@ export function initTransitions({ gsap, calm }) {
       .to(path, { drawSVG: '100%', duration: 0.45, ease: 'power2.inOut' }, '-=0.2');
   });
   window.addEventListener('pageshow', (e) => { if (e.persisted) { pt.classList.remove('is-on'); gsap.set(pt, { yPercent: 100 }); } });
+}
+
+/* bouton « Je participe » flottant sur téléphone, masqué quand un autre appel à participer est visible */
+export function initFab() {
+  const fab = document.querySelector('[data-fab]');
+  if (!fab || !('IntersectionObserver' in window)) return;
+  const watch = [...document.querySelectorAll('[data-cta-watch], #inscription, .footer, .final')];
+  const vis = new Set();
+  const update = () => {
+    const menuOpen = !document.getElementById('menu')?.hidden;
+    const show = vis.size === 0 && !menuOpen;
+    fab.classList.toggle('is-on', show);
+    fab.setAttribute('aria-hidden', show ? 'false' : 'true');
+    fab.tabIndex = show ? 0 : -1;
+  };
+  const io = new IntersectionObserver((entries) => { entries.forEach((e) => (e.isIntersecting ? vis.add(e.target) : vis.delete(e.target))); update(); }, { rootMargin: '0px 0px -8% 0px' });
+  watch.forEach((w) => io.observe(w));
+  update();
 }

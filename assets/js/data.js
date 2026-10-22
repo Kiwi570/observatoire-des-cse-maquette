@@ -3,7 +3,7 @@
 
 /* Calendrier : trié automatiquement entre passé et à venir. Dates ISO (heure de Paris). */
 export const DATES = [
-  { id: 'lancement', date: '2026-09-01', label: 'Septembre 2026', what: '1re édition de l’enquête nationale RPS', note: 'Lancement des réponses.' },
+  { id: 'lancement', date: '2026-09-01', label: 'Septembre 2026', what: 'Lancement de la 1re édition de l’enquête nationale RPS', note: 'Puis reconduction chaque année.', pastLabel: 'Lancée' },
   { id: 'cloture', date: null, label: 'Clôture des réponses', what: 'Fin du recueil des réponses', note: 'Date à compléter par l’Observatoire.', tbc: true },
   { id: 'restitution', date: '2027-03-10', end: '2027-03-11', label: '10 et 11 mars 2027', what: 'Restitution des résultats au Stade de France', note: 'Accès VIP offert par Eluceo aux participants.' },
   { id: 'edition2', date: null, label: 'Édition suivante', what: 'Reconduction annuelle, avec un socle d’items stable', note: 'Date à compléter.', tbc: true },
@@ -12,10 +12,10 @@ export const DATES = [
 export const RESTITUTION = '2027-03-10T00:00:00+01:00';
 
 /* 1re étude : réponses recueillies fin 2019, publiée dans Social CSE n°110 (janv.-fév. 2021). */
-export const SOURCE_1 = 'Source : Observatoire des CSE, 1re étude, plusieurs centaines de réponses recueillies fin 2019. Publiée dans Social CSE n°110, janvier-février 2021.';
+export const SOURCE_1 = 'Source : Observatoire des CSE, 1re étude, plusieurs centaines de réponses recueillies fin 2019. Publiée dans Social CSE n°110, janvier-février 2021.';
 
 export const OUVERTURE = {
-  question: 'Depuis le passage de votre CE en CSE, considérez-vous que le dialogue social est devenu plus ouvert ?',
+  question: 'Depuis le passage de votre CE en CSE, considérez-vous que le dialogue social est devenu plus ouvert ?',
   cats: ['Oui', 'Non', 'Sans changement', 'Ne sait pas'],
   os: [5, 68, 23, 3],
   sansOs: [29, 29, 38, 5],

@@ -1,9 +1,9 @@
 /* Observatoire des CSE · maquette « Le Pouls » — chef d'orchestre. */
 import { DATES, RESTITUTION, OUVERTURE, MISE_EN_PLACE, PERCEPTION, REUNIONS, SECTEURS } from './data.js';
-import { fillMedia, imageFor } from './media.js';
+import { fillMedia } from './media.js';
 import { initPulse } from './pulse.js';
 import { gauge, vbars, hbars, dumbbell, stacked, radar, trend, spark, cover } from './charts.js';
-import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, store } from './ui.js';
+import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, initFab, store } from './ui.js';
 import { initForms } from './forms.js';
 import { initAnon } from './anon.js';
 
@@ -23,7 +23,7 @@ fillMedia();
 document.querySelectorAll('[data-cover]').forEach(cover);
 
 const now = new Date();
-const dayDiff = (iso) => Math.ceil((new Date(`${iso}T00:00:00+01:00`) - now) / 86400000);
+const dayDiff = (iso) => Math.floor((new Date(`${iso}T00:00:00+01:00`) - now) / 86400000);
 document.querySelectorAll('[data-days-to]').forEach((el) => { const d = Math.max(0, dayDiff(el.dataset.daysTo)); el.textContent = el.dataset.daysFmt === 'n' ? d : `J-${d}`; });
 
 function renderMilestones() {
@@ -40,7 +40,7 @@ function renderMilestones() {
   ol.innerHTML = items.map((it, i) => {
     const past = !it.now && it.date && (it.end || it.date) < today;
     let cls = past ? 'is-past' : it.now ? 'is-now' : '';
-    let badge = past ? 'Passé' : it.now ? 'En ce moment' : 'À venir';
+    let badge = past ? (it.pastLabel || 'Passé') : it.now ? 'En ce moment' : 'À venir';
     if (!past && !it.now && !next) { cls += ' is-next'; next = true; }
     return `<li class="ms ${cls}" style="--i:${i}"><span class="ms__dot" data-pulse${it.now ? ' data-pulse-beat' : ''}></span><span class="ms__when">${it.label}<span class="ms__badge">${badge}</span>${it.tbc ? '<span class="tbc">à compléter</span>' : ''}</span><p class="ms__what">${it.what}</p>${it.note ? `<p class="ms__note">${it.note}</p>` : ''}</li>`;
   }).join('');
@@ -53,20 +53,20 @@ function buildStadium() {
   const NS = 'http://www.w3.org/2000/svg';
   const rows = [];
   const inner = document.createElementNS(NS, 'ellipse');
-  inner.setAttribute('cx', 250); inner.setAttribute('cy', 200); inner.setAttribute('rx', 146); inner.setAttribute('ry', 90);
+  inner.setAttribute('cx', 250); inner.setAttribute('cy', 200); inner.setAttribute('rx', 148); inner.setAttribute('ry', 112);
   inner.setAttribute('class', 'inner'); svg.appendChild(inner);
   for (let k = 0; k < 6; k++) {
-    const rx = 150 + k * 15, ry = 93 + k * 9.4;
+    const rx = 152 + k * 15, ry = 114 + k * 11;
     const e = document.createElementNS(NS, 'ellipse');
     e.setAttribute('cx', 250); e.setAttribute('cy', 200); e.setAttribute('rx', rx); e.setAttribute('ry', ry);
     e.setAttribute('class', 'row-ring'); e.style.strokeDasharray = `${2 + k * 0.4} ${4 + k * 0.6}`;
     svg.appendChild(e); rows.push(e);
   }
   const ring = document.createElementNS(NS, 'path');
-  ring.setAttribute('d', 'M14 200 A236 146 0 1 1 486 200 A236 146 0 1 1 14 200');
+  ring.setAttribute('d', 'M14 200 A236 182 0 1 1 486 200 A236 182 0 1 1 14 200');
   ring.setAttribute('class', 'main-ring'); svg.appendChild(ring);
   const pitch = document.createElementNS(NS, 'rect');
-  pitch.setAttribute('x', 150); pitch.setAttribute('y', 140); pitch.setAttribute('width', 200); pitch.setAttribute('height', 120); pitch.setAttribute('rx', 4);
+  pitch.setAttribute('x', 142); pitch.setAttribute('y', 128); pitch.setAttribute('width', 216); pitch.setAttribute('height', 144); pitch.setAttribute('rx', 4);
   pitch.setAttribute('class', 'pitch'); svg.appendChild(pitch);
   return { rows, ring };
 }
@@ -103,7 +103,7 @@ lensTicks();
 /* ---------- 2. graphiques ---------- */
 const charts = {};
 document.querySelectorAll('[data-gauge]').forEach((el) => { const g = gauge(el, { gsap, calm: !motion }); if (el.hasAttribute('data-ab-gauge')) charts.abGauge = g; });
-document.querySelectorAll('[data-chart="ouverture"]').forEach((el) => { const c = vbars(el, OUVERTURE, { gsap, calm: !motion, set: el.dataset.set || 'os', anchors: el.hasAttribute('data-pulse-chart'), anchorClass: el.dataset.pulseChart === 'w' ? 'pa--w' : 'pa--d' }); if (el.hasAttribute('data-ab-target')) charts.abBars = c; });
+document.querySelectorAll('[data-chart="ouverture"]').forEach((el) => { const c = vbars(el, OUVERTURE, { gsap, calm: !motion, set: el.dataset.set || 'os' }); if (el.hasAttribute('data-ab-target')) charts.abBars = c; });
 document.querySelectorAll('[data-chart="miseenplace"]').forEach((el) => { charts.abH = hbars(el, MISE_EN_PLACE, { gsap, calm: !motion }); });
 document.querySelectorAll('[data-chart="perception"]').forEach((el) => dumbbell(el, PERCEPTION, { gsap, calm: !motion }));
 document.querySelectorAll('[data-chart="reunions"]').forEach((el) => stacked(el, REUNIONS, { gsap, calm: !motion, colors: ['var(--coral)', 'var(--ink)', '#A9B1C4', 'var(--paper-deep)'], legendEl: document.querySelector('[data-legend="reunions"]') }));
@@ -116,8 +116,8 @@ if (ab) {
   btns.forEach((b) => b.addEventListener('click', () => {
     btns.forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); place();
     const k = b.dataset.abSet;
-    filt.textContent = k === 'os' ? 'Filtre appliqué : une ou plusieurs organisations syndicales' : 'Filtre appliqué : aucune organisation syndicale';
-    charts.abBars?.set(k, () => window.dispatchEvent(new Event('pulse:rebuild')));
+    filt.textContent = k === 'os' ? 'Filtre appliqué : une ou plusieurs organisations syndicales' : 'Filtre appliqué : aucune organisation syndicale';
+    charts.abBars?.set(k);
     charts.abH?.set(k);
     charts.abGauge?.set(OUVERTURE[k][1]);
   }));
@@ -148,7 +148,7 @@ if (demo) {
 /* ---------- 3. défilement fluide et interface ---------- */
 let lenis = null;
 if (motion && window.Lenis) {
-  lenis = new window.Lenis({ lerp: 0.11, smoothWheel: true, anchors: { offset: -80 }, autoRaf: false });
+  lenis = new window.Lenis({ lerp: 0.11, smoothWheel: true, anchors: true, autoRaf: false });
   lenis.on('scroll', ST ? ST.update : () => {});
   gsap.ticker.add((t) => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -160,6 +160,7 @@ initCopy();
 initCalmToggle(CALM);
 initForms({ gsap, calm: !motion });
 initTransitions({ gsap, calm: !motion });
+initFab();
 if (motion && FINE) { initCursor(); initMagnetic(gsap); initTilt(gsap); }
 
 /* ---------- 4. animations ---------- */
@@ -168,9 +169,7 @@ const heroGLp = (async () => {
   if (!lens) return null;
   try {
     const { initHeroGL } = await import('./heroGL.js');
-    const name = MOBILE() && lens.dataset.imgM ? lens.dataset.imgM : lens.dataset.img;
-    const img = imageFor(name);
-    const gl = initHeroGL(lens, { calm: !motion, imgSrc: img ? img.src : null, lineEl: document.querySelector('[data-pulse-hero]') });
+    const gl = initHeroGL(lens, { calm: !motion, imgEl: lens.querySelector('img'), lineEl: document.querySelector('[data-pulse-hero]') });
     if (gl) lens.classList.add('has-gl');
     return gl;
   } catch (e) { return null; }
@@ -256,6 +255,11 @@ function aboutSlides() {
 function parcours() {
   const sec = document.querySelector('[data-parcours]');
   if (!sec) return;
+  const screen = sec.querySelector('[data-phone-screen]');
+  if (screen) {
+    const fit = () => screen.style.setProperty('--ps-scale', (screen.clientWidth / 276).toFixed(4));
+    fit(); if ('ResizeObserver' in window) new ResizeObserver(fit).observe(screen);
+  }
   const steps = sec.querySelectorAll('.step'), screens = sec.querySelectorAll('[data-ps]');
   const typed = sec.querySelector('[data-type]'), text = typed?.dataset.type || '';
   const box = sec.querySelector('[data-box="0"] svg'), btn = sec.querySelector('[data-ps-btn]'), notif = sec.querySelector('[data-notif]');
@@ -288,7 +292,7 @@ function parcours() {
     .to({}, { duration: 0.6 });
   const total = tl.duration();
   ST.create({
-    trigger: sec, start: 'top top', end: () => `+=${window.innerHeight * 3}`, pin: true, scrub: 0.7, animation: tl, anticipatePin: 1,
+    trigger: sec, start: 'top top', end: () => `+=${window.innerHeight * (MOBILE() ? 1.4 : 1.7)}`, pin: true, scrub: 0.7, animation: tl, anticipatePin: 1,
     onUpdate: (self) => { const t = self.progress * total; setStep(t < 1.05 ? 0 : t < 2.15 ? 1 : t < 4.75 ? 2 : 3); },
   });
 }
@@ -299,9 +303,13 @@ function anonymiser() {
   const a = initAnon(sec, { calm: !motion, mobile: MOBILE() });
   const list = sec.querySelectorAll('.guar');
   if (!motion || !ST) { a.setProgress(1); return; }
-  gsap.set(list, { opacity: 0, y: 30 });
-  const tl = gsap.timeline().to({}, { duration: 0.62 }).to(list, { opacity: 1, y: 0, stagger: 0.08, duration: 0.25 });
-  ST.create({ trigger: sec, start: 'top top', end: () => `+=${window.innerHeight * 2.2}`, pin: true, scrub: 0.6, animation: tl, anticipatePin: 1, onUpdate: (self) => a.setProgress(self.progress), onRefresh: () => a.resample() });
+  gsap.from(list, { opacity: 0, y: 24, stagger: 0.08, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: sec.querySelector('[data-anon-list]'), start: 'top 92%', once: true } });
+  if (MOBILE()) {
+    // téléphone : pas d'épinglage, la fiche se défait pendant que la section défile
+    ST.create({ trigger: sec, start: 'top 55%', end: 'bottom 45%', scrub: 0.6, onUpdate: (self) => a.setProgress(self.progress), onRefresh: () => a.resample() });
+  } else {
+    ST.create({ trigger: sec, start: 'top top', end: () => `+=${window.innerHeight}`, pin: true, scrub: 0.6, anticipatePin: 1, onUpdate: (self) => a.setProgress(self.progress * 1.1), onRefresh: () => a.resample() });
+  }
 }
 
 function stadiumAnim() {
@@ -326,7 +334,7 @@ function heroIn(pulse, gl) {
       lines.forEach((l) => { const w = document.createElement('span'); w.className = 'l-mask'; w.style.display = 'block'; w.style.overflow = 'hidden'; w.style.paddingBottom = '.08em'; w.style.marginBottom = '-.08em'; l.parentNode.insertBefore(w, l); w.appendChild(l); });
       gsap.from(lines, { yPercent: 110, duration: 1.3, ease: 'expo.out', stagger: 0.1, delay });
     }
-    gsap.from(items, { y: 24, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, delay: delay + 0.25 });
+    if (items.length) gsap.from(items, { y: 24, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, delay: delay + 0.25 });
     pulse?.revealHero(gsap, 1.6, delay + 0.1);
     gl?.reveal(gsap, 1.6, delay + 0.2);
   };
@@ -353,6 +361,35 @@ function heroIn(pulse, gl) {
     .add(() => startHero(0), 1.75);
 }
 
+function heroLife(pulse) {
+  const bpm = document.querySelector('[data-bpm]');
+  if (bpm) {
+    if (!motion) bpm.textContent = '60';
+    else {
+      let last = 0, timer = 0;
+      const tick = () => { const v = Math.round(58 + pulse.energy * 76); if (v !== last) { bpm.textContent = v; last = v; } };
+      const on = () => { if (!timer) timer = setInterval(tick, 140); }, off = () => { clearInterval(timer); timer = 0; };
+      if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => (e.isIntersecting ? on() : off())).observe(bpm); else on();
+    }
+  }
+  const ticks = document.querySelector('[data-lens-ticks]');
+  if (ticks && motion && ST) gsap.to(ticks, { rotation: 140, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.8 } });
+}
+
+// arrivée sur une ancre (#qui…) ou retour depuis le mode calme : position recalculée après l'ajout des sections épinglées
+let landed = false;
+function landOnTarget() {
+  let id = location.hash && location.hash.length > 1 ? decodeURIComponent(location.hash.slice(1)) : '';
+  const back = store.get('ocse-back', 'session');
+  if (back) { id = back; setTimeout(() => store.set('ocse-back', '', 'session'), 2500); }
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  const host = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
+  if (lenis) lenis.scrollTo(host, { immediate: true, force: true }); else host.scrollIntoView();
+  landed = true;
+}
+
 function boot(gl) {
   splitHeads();
   reveals();
@@ -363,7 +400,10 @@ function boot(gl) {
   const pulse = initPulse({ calm: !motion, fine: FINE, getVelocity: () => (lenis ? lenis.velocity : 0) });
   if (ST) ST.addEventListener('refresh', () => pulse.rebuild());
   heroIn(pulse, gl);
-  if (ST) { ST.refresh(); window.addEventListener('load', () => ST.refresh()); }
+  heroLife(pulse);
+  if (ST) ST.refresh();
+  landOnTarget();
+  if (ST) window.addEventListener('load', () => { ST.refresh(); landOnTarget(); }, { once: true });
   html.classList.add('is-ready');
 }
 

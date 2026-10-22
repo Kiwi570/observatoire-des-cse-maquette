@@ -7,12 +7,19 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Les résultats de la 1re étude de l’Observatoire des CSE sur le passage au CSE, et l’aperçu des résultats de l’enquête RPS 2026.">
 <meta name="theme-color" content="#F3EEE4">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Observatoire des CSE">
 <meta property="og:title" content="Résultats et études · Observatoire des CSE">
 <meta property="og:description" content="Les résultats de la 1re étude de l’Observatoire des CSE sur le passage au CSE, et l’aperçu des résultats de l’enquête RPS 2026.">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://observatoire-des-cse-maquette.vercel.app/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Observatoire des CSE : écouter, mesurer et prévenir les risques psychosociaux propres à l’exercice du mandat">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/main.css">
@@ -66,7 +73,8 @@
     <li><button type="button" data-drawer-open="panel">Devenir panéliste</button></li>
   </ul>
   <div class="menu__foot">
-    <a class="btn btn--primary" href="enquete-rps-2026.html#inscription">Je participe !</a>
+    <a class="btn btn--primary" href="enquete-rps-2026.html#inscription">Je participe</a>
+    <button class="calm-inline" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
     <span class="copy__text">contact@observatoiredescse.fr</span>
   </div>
 </div>
@@ -74,14 +82,13 @@
 <main id="contenu" data-page="resultats">
 
   <section class="phero" aria-labelledby="ph-t">
-    <i class="pa pa--gl" data-pulse style="--y:calc(var(--header-h) + 40px)"></i>
     <div class="wrap phero__grid">
       <div class="phero__text">
         <p class="eyebrow" data-hero-in>Résultats et études</p>
-        <h1 class="h1" id="ph-t" data-split>Se comparer et profiter <em>des retours d’expérience.</em></h1>
+        <h1 class="h1" id="ph-t" data-split>Se comparer et profiter <em class="hl">des retours d’expérience.</em></h1>
         <p class="lead" data-hero-in>La collecte, l’analyse et la publication des résultats de nos études permettent à tous les acteurs concernés de se comparer.</p>
         <div class="row" style="--gap:14px 22px" data-hero-in>
-          <a class="btn btn--primary btn--big" href="#etude-1" data-magnetic><span class="btn__label">Explorer l’étude n°1</span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn--primary btn--big" href="#etude-1" data-magnetic><span class="btn__label">Explorer l’étude n° 1</span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="link link--under" href="#recevoir">Recevoir les résultats</a>
         </div>
       </div>
@@ -96,13 +103,13 @@
         <div><p class="eyebrow">Les études</p><h2 class="h2" id="arch-t">Ce que l’Observatoire a mesuré, <em>et ce qui arrive.</em></h2></div>
       </div>
       <div class="archive">
-        <a class="study" href="#etude-1">
+        <a class="study" href="#etude-1" data-cursor="Voir">
           <div class="study__cover" data-cover="bars" aria-hidden="true"></div>
-          <span class="study__k">Étude n°1 · Disponible</span>
+          <span class="study__k">Étude n° 1 · Disponible</span>
           <h3>Le passage au CSE</h3>
           <p>Réponses recueillies fin 2019, publiées en janvier 2021 dans Social CSE.</p>
         </a>
-        <a class="study" href="enquete-rps-2026.html">
+        <a class="study" href="enquete-rps-2026.html" data-cursor="Voir">
           <div class="study__cover" data-cover="pulse" aria-hidden="true"></div>
           <span class="study__k">Enquête nationale RPS 2026 · En cours</span>
           <h3>Risques psychosociaux des représentants du personnel</h3>
@@ -112,7 +119,7 @@
           <div class="study__cover" data-cover="empty" aria-hidden="true"></div>
           <span class="study__k">Enquêtes d’opinion <span class="tbc">à compléter</span></span>
           <h3>Autres enquêtes de l’Observatoire</h3>
-          <p>Titres, dates et résultats à fournir : la page actuelle du site ne contient pas encore ces contenus.</p>
+          <p>Titres, dates et résultats à fournir : la page actuelle du site ne contient pas encore ces contenus.</p>
         </div>
       </div>
     </div>
@@ -122,8 +129,8 @@
     <i class="pa pa--gl" data-pulse style="--y:30px"></i>
     <div class="wrap">
       <div class="cal__head">
-        <p class="eyebrow">Étude n°1 · le passage au CSE</p>
-        <h2 class="h1" id="e1-t" data-split>Les élus ont pris leurs marques. <em>Le dialogue, moins.</em></h2>
+        <p class="eyebrow">Étude n° 1 · le passage au CSE</p>
+        <h2 class="h1" id="e1-t" data-split>Avec présence syndicale, <em class="hl">68&nbsp;% des élus</em> ne voient pas le dialogue s’ouvrir.</h2>
         <div class="method">
           <span class="chip">Plusieurs centaines de réponses</span>
           <span class="chip">Recueillies fin 2019, avant la crise sanitaire</span>
@@ -138,15 +145,13 @@
             <button type="button" aria-pressed="true" data-ab-set="os">Avec présence syndicale</button>
             <button type="button" aria-pressed="false" data-ab-set="sansOs">Sans organisation syndicale</button>
           </div>
-          <p data-ab-filter>Filtre appliqué : une ou plusieurs organisations syndicales</p>
+          <p data-ab-filter>Filtre appliqué : une ou plusieurs organisations syndicales</p>
         </div>
         <div class="panel-ab__main">
-          <h3 class="chart__title">« Le dialogue social est-il devenu plus ouvert ? »</h3>
-          <p class="chart__sub">Depuis le passage de votre CE en CSE, considérez-vous que le dialogue social est devenu plus ouvert ?</p>
-          <div class="chart" data-chart="ouverture" data-set="os" data-ab-target data-pulse-chart="w"></div>
-          <p class="source chart__foot">Répondants inclus = 100 %. Source : Observatoire des CSE, 1re étude, Social CSE n°110.</p>
-          <i class="pa pa--w" data-pulse style="--x:calc(100% + 24px);--y:calc(100% + 36px)"></i>
-          <i class="pa pa--w" data-pulse style="--x:calc(var(--g) * -.58);--y:calc(100% + 36px)"></i>
+          <h3 class="chart__title">« Le dialogue social est-il devenu plus ouvert ? »</h3>
+          <p class="chart__sub">Depuis le passage de votre CE en CSE, considérez-vous que le dialogue social est devenu plus ouvert ?</p>
+          <div class="chart" data-chart="ouverture" data-set="os" data-ab-target></div>
+          <p class="source chart__foot">Répondants inclus = 100 %. Source : Observatoire des CSE, 1re étude, Social CSE n° 110.</p>
         </div>
         <div class="panel-ab__side">
           <div>
@@ -169,25 +174,25 @@
       <div class="cal__head">
         <p class="eyebrow">Ce que le passage au CSE a changé</p>
         <h2 class="h2" id="perc-t">Les points négatifs <em>devancent les points positifs.</em></h2>
-        <p class="muted" style="margin:0;max-width:60ch">Pour chaque proposition, la part des réponses selon la présence syndicale. Survolez une ligne pour comparer.</p>
+        <p class="muted" style="margin:0;max-width:62ch">Analyse publiée dans Social CSE n° 110. Le propos est plus nuancé en l’absence de présence syndicale. Pour chaque proposition, la part des réponses selon la présence syndicale ; survolez ou sélectionnez une ligne pour lire les valeurs.</p>
       </div>
       <ul class="legend"><li><i style="background:var(--coral)"></i>Une ou plusieurs organisations syndicales</li><li><i style="background:var(--ink)"></i>Aucune organisation syndicale</li></ul>
       <div class="db" data-chart="perception"></div>
-      <p class="source chart__foot">Répondants inclus = 100 % par population. Source : Observatoire des CSE, 1re étude, Social CSE n°110.</p>
+      <p class="source chart__foot">Répondants inclus = 100 % par population. Source : Observatoire des CSE, 1re étude, Social CSE n° 110.</p>
       <div class="duo" style="margin-top:clamp(56px,7vw,110px)">
         <div>
           <h3 class="chart__title">Nombre de réunions</h3>
           <p class="chart__sub">Évolution depuis le passage au CSE, selon le type d’instance.</p>
           <ul class="legend" data-legend="reunions"></ul>
           <div class="st" data-chart="reunions"></div>
-          <p class="source chart__foot">Répondants inclus = 100 %. Source : 1re étude.</p>
+          <p class="source chart__foot">Répondants inclus = 100 %. Source : 1re étude.</p>
         </div>
         <div>
           <h3 class="chart__title">Présence syndicale</h3>
           <p class="chart__sub">Répartition des répondants selon le secteur d’activité.</p>
           <ul class="legend" data-legend="secteurs"></ul>
           <div class="st" data-chart="secteurs"></div>
-          <p class="source chart__foot">Répondants inclus = 100 %. Source : 1re étude.</p>
+          <p class="source chart__foot">Répondants inclus = 100 %. Source : 1re étude.</p>
         </div>
       </div>
     </div>
@@ -199,8 +204,8 @@
       <div class="testi__media"><figure class="media media--ar45" data-img="resultats-temoignage" data-ph="paper" data-reveal="clip"></figure></div>
       <figure class="testi__q">
         <p class="eyebrow">Le point de vue d’une participante</p>
-        <blockquote data-split>« La performance d’une entreprise se mesure aussi à la qualité de ses relations sociales »</blockquote>
-        <figcaption class="muted">Odile, déléguée syndicale, a participé à la 1re enquête. Propos recueillis par Social CSE, n°110.</figcaption>
+        <blockquote data-split>« La performance d’une entreprise se mesure aussi à la qualité de ses relations sociales »</blockquote>
+        <figcaption class="muted">Odile, déléguée syndicale, a participé à la 1re enquête. Propos recueillis par Social CSE, n° 110.</figcaption>
       </figure>
     </div>
     <i class="pa pa--gl" data-pulse style="--y:calc(100% - 30px)"></i>
@@ -210,7 +215,7 @@
     <div class="wrap">
       <div class="cal__head">
         <p class="eyebrow">Après mars 2027</p>
-        <h2 class="h1" id="demo-t" data-split>À quoi ressembleront <em>les résultats RPS 2026.</em></h2>
+        <h2 class="hs" id="demo-t" data-split>À quoi ressembleront <em>les résultats RPS 2026.</em></h2>
         <p class="muted" style="margin:0;max-width:60ch">Exemple de tableau de bord. Les chiffres sont fictifs, les axes sont des exemples à remplacer par les dimensions du questionnaire.</p>
       </div>
       <div class="demo cover" data-demo>
@@ -235,14 +240,14 @@
   <section class="section band" id="presse" aria-labelledby="press-t">
     <i class="pa pa--gl" data-pulse style="--y:30px"></i>
     <div class="wrap press-fan">
-      <div class="press-fan__pages" data-fan>
+      <div class="press-fan__pages" data-fan data-cursor="Lire">
         <div class="pg" style="left:2%"><img src="assets/img/site/presse/social-cse-110-graphiques-560.webp" width="560" height="741" alt="Page de graphiques de l’article de Social CSE" loading="lazy"></div>
         <div class="pg" style="left:27%"><img src="assets/img/site/presse/social-cse-110-ouverture-560.webp" width="560" height="741" alt="Page d’ouverture de l’article « Nouveau ! Un observatoire pour les CSE »" loading="lazy"></div>
         <div class="pg" style="left:52%"><img src="assets/img/site/presse/social-cse-110-couverture-560.webp" width="560" height="795" alt="Couverture de Social CSE n°110" loading="lazy"></div>
       </div>
       <div class="press-fan__text">
         <p class="eyebrow">La presse en parle</p>
-        <h2 class="h2" id="press-t">« Nouveau ! Un observatoire <em>pour les CSE »</em></h2>
+        <h2 class="h2" id="press-t">« Nouveau ! Un observatoire <em>pour les CSE »</em></h2>
         <p class="prose">Dans son numéro 110 de janvier-février 2021, Social CSE a salué la création de l’Observatoire, présenté la synthèse de la 1re étude avec l’analyse de Ronan Darchen, et recueilli le point de vue d’Odile, déléguée syndicale.</p>
         <div class="row" style="--gap:14px 22px"><a class="btn btn--ghost" href="https://www.observatoiredescse.fr/_files/ugd/dd0523_7a8e67b90d59447f8cf07f78aa694647.pdf" target="_blank" rel="noopener">Lire l’article (PDF)</a></div>
       </div>
@@ -254,16 +259,17 @@
     <div class="wrap signup">
       <div class="signup__form">
         <p class="eyebrow">Recevoir les résultats</p>
-        <h2 class="h2" id="rec-t">Recevez le résultat <em>de nos études.</em></h2>
+        <h2 class="h2" id="rec-t">Recevez les résultats <em>de nos études.</em></h2>
         <form class="form" data-form="results" novalidate>
           <div class="fields-2">
             <div class="field"><label for="rec-prenom">Prénom</label><input id="rec-prenom" name="prenom" type="text" autocomplete="given-name"></div>
             <div class="field"><label for="rec-nom">Nom de famille</label><input id="rec-nom" name="nom" type="text" autocomplete="family-name"></div>
           </div>
           <div class="field"><label for="rec-email">E-mail <span class="req">*</span></label><input id="rec-email" name="email" type="email" autocomplete="email" inputmode="email" required><span class="field__err" hidden>Indiquez une adresse e-mail valide, par exemple prenom.nom@exemple.fr.</span></div>
-          <label class="check" for="rec-ok"><input id="rec-ok" name="ok" type="checkbox"><span>J’accepte de recevoir par e-mail les résultats des études de l’Observatoire des CSE.</span></label>
+          <label class="check" for="rec-ok"><input id="rec-ok" name="ok" type="checkbox" required><span>J’accepte de recevoir par e-mail les résultats des études de l’Observatoire des CSE. <span class="req">*</span></span></label>
+          <span class="field__err" hidden>Cochez cette case pour recevoir les résultats.</span>
           <button class="btn btn--primary" type="submit" style="align-self:flex-start">Recevoir les résultats</button>
-          <p class="sim-note">Maquette : rien n’est envoyé.</p>
+          <p class="sim-note">Maquette : rien n’est envoyé.</p>
         </form>
         <div class="success" data-success hidden tabindex="-1"><h3>Merci, c’est noté.</h3><p>Dans la version en ligne, vous recevriez les prochains résultats à cette adresse. Ici, rien n’a été envoyé.</p></div>
       </div>
@@ -297,15 +303,19 @@
     <div class="footer__col footer__contact">
       <h2>Nous écrire</h2>
       <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+      <button class="btn btn--light footer__write" type="button" data-drawer-open="contact">Écrire un message</button>
       <p class="muted">Téléphone et adresse postale <span class="tbc">à compléter</span></p>
     </div>
     <div class="footer__bottom">
       <span>© 2026 Observatoire des CSE</span>
       <a class="link" href="confidentialite.html">Confidentialité et mentions légales</a>
-      <span>Maquette de démonstration : formulaires simulés, aucun envoi.</span>
+      <span>Maquette de démonstration : formulaires simulés, aucun envoi.</span>
+      <button class="calm-inline" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
     </div>
   </div>
 </footer>
+
+<p class="sr-only" aria-live="polite" data-live></p>
 <button class="calm-toggle" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
 <div class="drawer" id="drawer-panel" data-drawer="panel" hidden>
   <div class="drawer__scrim" data-drawer-close></div>
@@ -321,7 +331,7 @@
           <option>Titulaire au CSE</option><option>Suppléant au CSE</option><option>Représentant de proximité</option><option>Membre d’une CSSCT</option><option>Délégué syndical</option><option>Représentant syndical au CSE</option><option>Autre</option>
         </select>
       </div>
-      <div class="field"><label for="panel-email">E-mail <span class="req">*</span></label><input id="panel-email" name="email" type="email" autocomplete="email" required inputmode="email"><span class="field__err" hidden>Indiquez une adresse e-mail valide, par exemple prenom.nom@exemple.fr.</span></div>
+      <div class="field"><label for="panel-email">E-mail <span class="req">*</span></label><input id="panel-email" name="email" type="email" autocomplete="email" required inputmode="email"><span class="field__err" hidden></span></div>
       <div class="fields-2">
         <div class="field"><label for="panel-effectif">Effectif de l’entreprise</label>
           <select id="panel-effectif" name="effectif"><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
@@ -333,11 +343,70 @@
       </div>
       <p class="sim-note">Listes de choix reprises de l’étude de 2019, à valider par l’Observatoire.</p>
       <button class="btn btn--primary" type="submit">Envoyer</button>
-      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
     </form>
     <div class="success" data-success hidden tabindex="-1">
       <h3>Merci, c’est noté.</h3>
       <p>Dans la version en ligne, votre inscription au panel serait enregistrée. Ici, rien n’a été envoyé.</p>
+    </div>
+  </div>
+</div>
+<div class="drawer" id="drawer-contact" data-drawer="contact" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <div class="drawer__top"><p class="eyebrow">Nous écrire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="contact-title">Contactez-nous</h2>
+    <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+    <form class="form" data-form="contact" novalidate>
+      <div class="fields-2">
+        <div class="field"><label for="contact-prenom">Prénom</label><input id="contact-prenom" name="prenom" type="text" autocomplete="given-name"></div>
+        <div class="field"><label for="contact-nom">Nom de famille</label><input id="contact-nom" name="nom" type="text" autocomplete="family-name"></div>
+      </div>
+      <div class="field"><label for="contact-email">E-mail <span class="req">*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+      <div class="field"><label for="contact-objet">Objet</label><input id="contact-objet" name="objet" type="text"></div>
+      <div class="field"><label for="contact-msg">Message <span class="req">*</span></label><textarea id="contact-msg" name="message" rows="5" required data-msg="Écrivez votre message avant d’envoyer."></textarea></div>
+      <button class="btn btn--primary" type="submit" style="align-self:flex-start">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci pour votre message.</h3>
+      <p>Dans la version en ligne, il serait transmis à l’équipe de l’Observatoire. Ici, rien n’a été envoyé.</p>
+      <button class="back" type="button" data-form-reset style="align-self:flex-start">Écrire un autre message</button>
+    </div>
+  </div>
+</div>
+<div class="drawer" id="drawer-avantages" data-drawer="avantages" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="avantages-title">
+    <div class="drawer__top"><p class="eyebrow">Aperçu · après le questionnaire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="avantages-title">Merci pour votre participation, <em class="hl">place aux avantages !</em></h2>
+    <p class="muted" style="margin:0">Cette page s’affiche une fois le questionnaire rempli. Elle ne doit pas être accessible directement depuis le site.</p>
+    <form class="form" data-form="avantages" novalidate>
+      <fieldset class="gifts-pick" data-group-min="1">
+        <legend class="label">Je souhaite bénéficier des avantages gratuits proposés par les partenaires <span class="req">*</span> <span class="muted">(plusieurs choix possibles)</span></legend>
+        <label class="pick" for="av-alinea"><input id="av-alinea" type="checkbox" name="avantages" value="alinea"><img src="assets/img/site/partenaires/alinea.webp" alt="" width="407" height="155" loading="lazy"><span><b>Alinea</b> · 1 formation de 2 h 30 en distanciel, gratuite (valeur 199 €)</span></label>
+        <label class="pick" for="av-influence"><input id="av-influence" type="checkbox" name="avantages" value="influence"><img src="assets/img/site/partenaires/influence-cse.webp" alt="" width="151" height="34" loading="lazy"><span><b>Influence!CSE</b> · abonnement d’un an au magazine (valeur 129 €)</span></label>
+        <label class="pick" for="av-eluceo"><input id="av-eluceo" type="checkbox" name="avantages" value="eluceo"><img src="assets/img/site/partenaires/eluceo.webp" alt="" width="566" height="295" loading="lazy"><span><b>Eluceo</b> · accès VIP au Stade de France pour la restitution des résultats, les 10 et 11 mars 2027</span></label>
+        <span class="field__err" hidden>Choisissez au moins un avantage.</span>
+      </fieldset>
+      <div class="field"><label for="av-nom">Nom et prénom <span class="req">*</span></label><input id="av-nom" name="nom" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="av-mandat">Fonction ou mandat <span class="req">*</span></label><input id="av-mandat" name="mandat" type="text" required></div>
+      <div class="fields-2">
+        <div class="field"><label for="av-email">E-mail <span class="req">*</span></label><input id="av-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+        <div class="field"><label for="av-tel">Téléphone <span class="req">*</span></label><input id="av-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      </div>
+      <div class="field"><label for="av-ent">Nom de l’entreprise <span class="req">*</span></label><input id="av-ent" name="entreprise" type="text" autocomplete="organization" required></div>
+      <div class="field"><label for="av-adr">Adresse complète <span class="req">*</span></label><input id="av-adr" name="adresse" type="text" autocomplete="street-address" required></div>
+      <div class="field"><label for="av-eff">Effectif <span class="req">*</span></label>
+        <select id="av-eff" name="effectif" required><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
+      </div>
+      <p class="sim-note">Champs repris de la page actuelle. Tranches d’effectif à valider par l’Observatoire.</p>
+      <button class="btn btn--primary" type="submit" style="align-self:flex-start">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci, vos choix sont notés.</h3>
+      <p>Dans la version en ligne, les partenaires vous recontacteraient pour vos avantages. Ici, rien n’a été envoyé.</p>
     </div>
   </div>
 </div>

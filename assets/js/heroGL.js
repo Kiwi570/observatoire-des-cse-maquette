@@ -60,7 +60,7 @@ void main() {
   gl_FragColor = vec4(col, 1.0);
 }`;
 
-export function initHeroGL(el, { calm = false, imgSrc = null, lineEl = null } = {}) {
+export function initHeroGL(el, { calm = false, imgEl = null, lineEl = null } = {}) {
   let renderer;
   try {
     if (/[?&]nowebgl=1/.test(location.search)) return null;
@@ -81,10 +81,10 @@ export function initHeroGL(el, { calm = false, imgSrc = null, lineEl = null } = 
   });
   const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
   el.appendChild(gl.canvas);
-  if (imgSrc) {
-    const img = new Image(); img.decoding = 'async';
-    img.onload = () => { texture.image = img; program.uniforms.uTexRes.value = [img.naturalWidth, img.naturalHeight]; program.uniforms.uHasTex.value = 1; if (calm) setTimeout(() => render(0), 0); el.classList.add('gl-ready'); };
-    img.src = imgSrc;
+  if (imgEl) {
+    // même image que la balise <img> déjà chargée : aucun second téléchargement
+    const use = () => { if (!imgEl.naturalWidth) return; texture.image = imgEl; program.uniforms.uTexRes.value = [imgEl.naturalWidth, imgEl.naturalHeight]; program.uniforms.uHasTex.value = 1; if (calm) setTimeout(() => render(0), 0); el.classList.add('gl-ready'); };
+    if (imgEl.complete && imgEl.naturalWidth) use(); else imgEl.addEventListener('load', use, { once: true });
   }
   const resize = () => {
     const r = el.getBoundingClientRect();

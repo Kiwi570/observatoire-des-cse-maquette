@@ -29,6 +29,8 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
   const css = getComputedStyle(document.documentElement);
   const INK = css.getPropertyValue('--ink').trim() || '#13203A';
   const CORAL = css.getPropertyValue('--coral').trim() || '#FF6A4D';
+  const PAPER = css.getPropertyValue('--paper').trim() || '#F3EEE4';
+  let nights = [];
 
   let W = 0, H = 0, dpr = 1, N = 0, total = 0;
   let X = new Float32Array(0), Y = new Float32Array(0), L = new Float32Array(0), RM = new Float32Array(0);
@@ -57,8 +59,19 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
     return out;
   }
 
+  function nightRanges() {
+    const sy = window.scrollY;
+    return [...document.querySelectorAll('.night')].map((el) => {
+      const host = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
+      const r = host.getBoundingClientRect();
+      return [r.top + sy, r.bottom + sy];
+    });
+  }
+  const isNight = (y) => { for (const [a, b] of nights) if (y >= a && y <= b) return true; return false; };
+
   function build() {
     resize();
+    nights = nightRanges();
     const A0 = anchors();
     // segments longs : points intermédiaires pour garder un tracé droit et éviter les dépassements
     const A = [];
@@ -97,14 +110,16 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
     for (let i = 1; i < N; i++) { s += Math.hypot(P[i].x - P[i - 1].x, P[i].y - P[i - 1].y); L[i] = s; }
     total = s;
     const beatS = beats.map((i) => L[i]);
-    const ampTop = mobile ? 4.5 : 12, ampEnd = mobile ? 2.5 : 5;
+    // pages sans vague d'ouverture : ligne calme dès le départ (pas de gribouillis vertical)
+    const agitK = hero ? 1 : 0.25;
+    const ampTop = (mobile ? 3.5 : 12) * (hero ? 1 : 0.6), ampEnd = mobile ? 2.2 : 5;
     let rm = -Infinity;
     for (let i = 0; i < N; i++) {
       const a = P[Math.max(0, i - 1)], b = P[Math.min(N - 1, i + 1)];
       let tx = b.x - a.x, ty = b.y - a.y; const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
       const nx = -ty, ny = tx;
       const t = L[i] / (total || 1), sp = L[i];
-      const agit = 1 - smooth(0, 0.42, t);
+      const agit = (1 - smooth(0, 0.42, t)) * agitK;
       let amp = lerp(ampTop, ampEnd, smooth(0, 0.62, t));
       if (P[i].a >= 0) amp = Math.min(amp, P[i].a);
       const burst = 0.55 + 0.45 * Math.sin(sp / 70 + 1.1);
@@ -112,7 +127,7 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
         + (1 - agit) * 0.75 * Math.sin(sp / 30);
       let beatF = 0;
       for (const bs of beatS) { const u = (sp - bs) / 13; if (u > -4 && u < 4) beatF += qrs(u); }
-      const bAmp = mobile ? 7 : 22;
+      const bAmp = mobile ? 5 : 22;
       const dx = nx * (amp * f + bAmp * beatF), dy = ny * (amp * f + bAmp * beatF);
       X[i] = P[i].x + dx; Y[i] = P[i].y + dy;
       rm = Math.max(rm, Y[i]); RM[i] = rm;
@@ -156,10 +171,16 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
     const end = Math.min(N - 1, lower(L, N, shown));
     const start = Math.max(0, lower(RM, N, sy - 80) - 1);
     if (end <= start) return;
-    // tracé principal
+    // tracé principal : encre sur le papier, craie sur les sections de nuit
+    ctx.lineWidth = mobile ? 1.3 : 1.6; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.globalAlpha = 0.92;
+    let night = isNight(Y[start]);
     ctx.beginPath(); ctx.moveTo(X[start], Y[start] - sy);
-    for (let i = start + 1; i <= end; i++) ctx.lineTo(X[i], Y[i] - sy);
-    ctx.strokeStyle = INK; ctx.globalAlpha = 0.92; ctx.lineWidth = mobile ? 1.3 : 1.6; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); ctx.globalAlpha = 1;
+    for (let i = start + 1; i <= end; i++) {
+      const n = nights.length ? isNight(Y[i]) : false;
+      ctx.lineTo(X[i], Y[i] - sy);
+      if (n !== night) { ctx.strokeStyle = night ? PAPER : INK; ctx.stroke(); ctx.beginPath(); ctx.moveTo(X[i], Y[i] - sy); night = n; }
+    }
+    ctx.strokeStyle = night ? PAPER : INK; ctx.stroke(); ctx.globalAlpha = 1;
     if (calm) return;
     // traîne corail
     const tail = Math.max(start, lower(L, N, shown - 120));
@@ -220,5 +241,6 @@ export function initPulse({ calm = false, fine = true, getVelocity = () => 0 } =
       gsap.to(o, { v: 1, duration, delay, ease: 'power2.inOut', onUpdate: () => { heroReveal = o.v; } });
     },
     kick(v = 1) { target = clamp(v, 0.1, 1); },
+    get energy() { return energy; },
   };
 }

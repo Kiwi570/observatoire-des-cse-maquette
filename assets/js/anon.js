@@ -1,83 +1,92 @@
-/* L'anonymiseur : un profil fictif se dissout en points qui rejoignent des milliers d'autres. */
+/* L'anonymiseur : la fiche d'un profil fictif se défait en petits carrés,
+   qui s'envolent et deviennent des points parmi des milliers d'autres. */
 export function initAnon(section, { calm = false, mobile = false } = {}) {
   const cv = section.querySelector('.anon__canvas');
   const card = section.querySelector('[data-profile]');
-  if (!cv || !card) return { setProgress() {} };
+  if (!cv || !card) return { setProgress() {}, resample() {} };
   const ctx = cv.getContext('2d');
-  let W = 0, H = 0, dpr = 1, field = [], parts = [], progress = calm ? 1 : 0, visible = false, raf = 0;
-  const COUNT = mobile ? 900 : 2200;
-  const cols = ['rgba(243,238,228,', 'rgba(255,181,120,', 'rgba(255,106,77,'];
+  let W = 0, H = 0, dpr = 1, field = [], tiles = [], step = 5, progress = calm ? 1 : 0, visible = false, raf = 0;
+  const COUNT = mobile ? 900 : 2000;
+  const FIELD = [[243, 238, 228], [255, 181, 120], [255, 106, 77]];
 
-  function sampleCard() {
-    const sr = section.getBoundingClientRect(), r = card.getBoundingClientRect();
-    const off = document.createElement('canvas'); const sc = 0.5;
-    off.width = Math.max(1, Math.round(r.width * sc)); off.height = Math.max(1, Math.round(r.height * sc));
+  // dessine la fiche telle qu'elle apparaît, pour la découper en carrés de la même couleur
+  function snapshot() {
+    const r = card.getBoundingClientRect();
+    const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+    const off = document.createElement('canvas'); off.width = w; off.height = h;
     const o = off.getContext('2d');
-    o.scale(sc, sc);
-    o.fillStyle = '#fff';
     const cs = getComputedStyle(card);
-    const pad = parseFloat(cs.paddingLeft) || 18;
-    let y = parseFloat(cs.paddingTop) || 16;
+    const rad = parseFloat(cs.borderTopLeftRadius) || 16;
+    o.fillStyle = cs.backgroundColor || '#F3EEE4';
+    o.beginPath();
+    if (o.roundRect) o.roundRect(0, 0, w, h, rad); else o.rect(0, 0, w, h);
+    o.fill();
+    o.textBaseline = 'top';
     [...card.children].forEach((ch) => {
-      const s = getComputedStyle(ch);
-      o.font = `${s.fontWeight} ${s.fontSize} ${s.fontFamily}`;
-      o.textBaseline = 'top';
+      const s = getComputedStyle(ch), cr = ch.getBoundingClientRect();
+      o.font = `${s.fontStyle} ${s.fontWeight} ${s.fontSize} ${s.fontFamily}`;
+      o.fillStyle = s.color;
+      if ('letterSpacing' in o) o.letterSpacing = s.letterSpacing === 'normal' ? '0px' : s.letterSpacing;
+      const txt = s.textTransform === 'uppercase' ? ch.textContent.trim().toUpperCase() : ch.textContent.trim();
       const lh = parseFloat(s.lineHeight) || parseFloat(s.fontSize) * 1.3;
-      o.fillText(ch.textContent.trim(), pad, y);
-      y += lh + 8;
+      const top = cr.top - r.top + (lh - parseFloat(s.fontSize)) / 2;
+      // retour à la ligne simple, comme dans la fiche
+      const maxW = cr.width + 1; let line = '', y = top;
+      for (const word of txt.split(' ')) {
+        const test = line ? `${line} ${word}` : word;
+        if (o.measureText(test).width > maxW && line) { o.fillText(line, cr.left - r.left, y); line = word; y += lh; } else line = test;
+      }
+      if (line) o.fillText(line, cr.left - r.left, y);
     });
-    const d = o.getImageData(0, 0, off.width, off.height).data, pts = [];
-    const step = mobile ? 3 : 2;
-    for (let yy = 0; yy < off.height; yy += step) for (let xx = 0; xx < off.width; xx += step) {
-      if (d[(yy * off.width + xx) * 4 + 3] > 120) pts.push([r.left - sr.left + xx / sc, r.top - sr.top + yy / sc]);
-    }
-    // contour de la carte
-    for (let i = 0; i < 160; i++) {
-      const t = i / 160, per = 2 * (r.width + r.height), p = t * per;
-      let x, yv;
-      if (p < r.width) { x = p; yv = 0; } else if (p < r.width + r.height) { x = r.width; yv = p - r.width; } else if (p < 2 * r.width + r.height) { x = r.width - (p - r.width - r.height); yv = r.height; } else { x = 0; yv = r.height - (p - 2 * r.width - r.height); }
-      pts.push([r.left - sr.left + x, r.top - sr.top + yv]);
-    }
-    return pts;
+    return { off, o, w, h, x: r.left - section.getBoundingClientRect().left, y: r.top - section.getBoundingClientRect().top };
   }
 
   function setup() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = section.clientWidth; H = section.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    let s = 12345; const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
-    field = Array.from({ length: COUNT }, () => ({ x: rnd() * W, y: rnd() * H, s: 0.6 + rnd() * 1.5, p: rnd() * 6.28, c: rnd() < 0.82 ? 0 : rnd() < 0.7 ? 1 : 2, a: 0.25 + rnd() * 0.5 }));
-    const src = sampleCard();
-    parts = src.map(([x, y], i) => { const f = field[(i * 7) % field.length]; return { sx: x, sy: y, tx: f.x, ty: f.y, d: rnd() * 0.35, p: rnd() * 6.28 }; });
+    let seed = 12345; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    field = Array.from({ length: COUNT }, () => ({ x: rnd() * W, y: rnd() * H, s: 0.7 + rnd() * 1.5, p: rnd() * 6.28, c: rnd() < 0.82 ? 0 : rnd() < 0.7 ? 1 : 2, a: 0.25 + rnd() * 0.5 }));
+    step = mobile ? 6 : 5;
+    const snap = snapshot();
+    const data = snap.o.getImageData(0, 0, snap.w, snap.h).data;
+    tiles = [];
+    for (let yy = 0; yy < snap.h; yy += step) {
+      for (let xx = 0; xx < snap.w; xx += step) {
+        const px = Math.min(snap.w - 1, xx + (step >> 1)), py = Math.min(snap.h - 1, yy + (step >> 1));
+        const k = (py * snap.w + px) * 4;
+        if (data[k + 3] < 40) continue;
+        const f = field[Math.floor(rnd() * field.length)];
+        tiles.push({
+          sx: snap.x + xx, sy: snap.y + yy, r: data[k], g: data[k + 1], b: data[k + 2],
+          tx: f.x, ty: f.y, d: (xx / snap.w) * 0.42 + rnd() * 0.14, p: rnd() * 6.28, lift: 20 + rnd() * 70,
+        });
+      }
+    }
   }
 
   const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
   function draw(time) {
     ctx.clearRect(0, 0, W, H);
     const t = calm ? 0 : time;
-    for (let k = 0; k < 3; k++) {
-      ctx.fillStyle = cols[k] + '1)';
-      for (const f of field) {
-        if (f.c !== k) continue;
-        ctx.globalAlpha = f.a * (0.75 + 0.25 * Math.sin(t * 0.8 + f.p));
-        const x = f.x + Math.sin(t * 0.25 + f.p) * 6, y = f.y + Math.cos(t * 0.21 + f.p) * 6;
-        ctx.fillRect(x, y, f.s, f.s);
-      }
+    for (const f of field) {
+      const c = FIELD[f.c];
+      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${(f.a * (0.75 + 0.25 * Math.sin(t * 0.8 + f.p))).toFixed(3)})`;
+      ctx.fillRect(f.x + Math.sin(t * 0.25 + f.p) * 6, f.y + Math.cos(t * 0.21 + f.p) * 6, f.s, f.s);
     }
-    ctx.globalAlpha = 1;
-    if (calm) return;
-    const pg = Math.min(1, Math.max(0, (progress - 0.18) / 0.5));
-    card.style.opacity = pg > 0 ? '0' : '1';
-    if (pg > 0 && pg < 1.0001) {
-      ctx.fillStyle = cols[0] + '1)';
-      for (const q of parts) {
-        const e = ease(Math.min(1, Math.max(0, (pg - q.d) / (1 - 0.35))));
-        const x = q.sx + (q.tx - q.sx) * e + Math.sin(t * 0.25 + q.p) * 6 * e;
-        const y = q.sy + (q.ty - q.sy) * e + Math.sin(e * Math.PI) * -40;
-        ctx.globalAlpha = 0.95 - e * 0.45;
-        ctx.fillRect(x, y, 1.6, 1.6);
-      }
-      ctx.globalAlpha = 1;
+    if (calm) { card.style.opacity = '1'; return; }
+    const pg = clamp01((progress - 0.12) / 0.6);
+    if (pg <= 0) { card.style.opacity = '1'; return; }
+    card.style.opacity = '0';
+    for (const q of tiles) {
+      const e = ease(clamp01((pg - q.d) / 0.44));
+      const x = q.sx + (q.tx - q.sx) * e + Math.sin(t * 0.25 + q.p) * 6 * e;
+      const y = q.sy + (q.ty - q.sy) * e - Math.sin(e * Math.PI) * q.lift;
+      const size = step + (1.6 - step) * e;
+      const r = q.r + (243 - q.r) * e, g = q.g + (238 - q.g) * e, b = q.b + (228 - q.b) * e;
+      ctx.fillStyle = `rgba(${r | 0},${g | 0},${b | 0},${(1 - 0.45 * e).toFixed(3)})`;
+      ctx.fillRect(x, y, e < 0.02 ? step + 0.5 : size, e < 0.02 ? step + 0.5 : size);
     }
   }
   function loop(now) { cancelAnimationFrame(raf); if (!visible) return; draw(now / 1000); raf = requestAnimationFrame(loop); }
@@ -86,10 +95,9 @@ export function initAnon(section, { calm = false, mobile = false } = {}) {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(reset); else reset();
   window.addEventListener('resize', () => { clearTimeout(reset._t); reset._t = setTimeout(reset, 200); });
   if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !calm) loop(performance.now()); }).observe(section);
-  if (calm) { card.style.opacity = '1'; }
 
   return {
     setProgress(p) { progress = p; if (calm) draw(0); },
-    resample: reset,
+    resample: () => { const o = card.style.opacity; card.style.opacity = '1'; reset(); card.style.opacity = o; },
   };
 }

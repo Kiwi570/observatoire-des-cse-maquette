@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page introuvable · Observatoire des CSE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cette page n’existe pas ou a été déplacée.">
+<meta name="theme-color" content="#F3EEE4">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Observatoire des CSE">
+<meta property="og:title" content="Page introuvable · Observatoire des CSE">
+<meta property="og:description" content="Cette page n’existe pas ou a été déplacée.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://observatoire-des-cse-maquette.vercel.app/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Observatoire des CSE : écouter, mesurer et prévenir les risques psychosociaux propres à l’exercice du mandat">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/main.css">
+<script>
+(function () {
+  var d = document.documentElement, calm = false, s = null;
+  d.lang = 'fr'; d.classList.add('js');
+  try { s = localStorage.getItem('ocse-calm'); } catch (e) {}
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  calm = s === '1' || (s !== '0' && reduced) || /[?&]calme=1/.test(location.search);
+  if (calm) d.classList.add('is-calm');
+  try { if (!calm && sessionStorage.getItem('ocse-pt') === '1') d.classList.add('pt-enter'); } catch (e) {}
+})();
+</script>
+<style>html.pt-enter body::after { content: ""; position: fixed; inset: 0; z-index: 150; background: #F3EEE4; animation: ptsafe 0s 2.4s forwards; } @keyframes ptsafe { to { visibility: hidden; } }</style>
+<script defer src="/assets/vendor/gsap/gsap.min.js"></script>
+<script defer src="/assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script defer src="/assets/vendor/gsap/SplitText.min.js"></script>
+<script defer src="/assets/vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script defer src="/assets/vendor/lenis/lenis.js"></script>
+<script type="module" src="/assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="header" data-header>
+  <div class="wrap header__in">
+    <a class="brand" href="/" aria-label="Observatoire des CSE, accueil"><img src="/assets/img/site/logos/logo-ocse.webp" alt="Observatoire des CSE" width="955" height="172"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a class="link" href="/enquete-rps-2026.html">L’enquête RPS 2026</a></li>
+        <li><a class="link" href="/resultats.html">Résultats</a></li>
+        <li><a class="link" href="/#qui">Qui sommes-nous</a></li>
+        <li><button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+      </ul>
+      <a class="btn btn--primary btn--nav" href="/enquete-rps-2026.html#inscription" data-magnetic><span class="btn__label">Je participe</span></a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="menu"><span aria-hidden="true"></span>Menu</button>
+    </nav>
+  </div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="menu__top">
+    <img src="/assets/img/site/logos/logo-ocse-blanc.webp" alt="" width="955" height="172">
+    <button class="menu__close" type="button" data-menu-close>Fermer</button>
+  </div>
+  <ul class="menu__list">
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/enquete-rps-2026.html">L’enquête RPS 2026</a></li>
+    <li><a href="/resultats.html">Résultats et études</a></li>
+    <li><a href="/#qui">Qui sommes-nous</a></li>
+    <li><button type="button" data-drawer-open="panel">Devenir panéliste</button></li>
+  </ul>
+  <div class="menu__foot">
+    <a class="btn btn--primary" href="/enquete-rps-2026.html#inscription">Je participe</a>
+    <button class="calm-inline" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
+    <span class="copy__text">contact@observatoiredescse.fr</span>
+  </div>
+</div>
+
+<main id="contenu" data-page="404">
+  <section class="phero notfound" aria-labelledby="nf-t">
+    <div class="wrap notfound__in">
+      <p class="eyebrow">Erreur 404</p>
+      <h1 class="display" id="nf-t">Pouls <em class="hl">plat.</em></h1>
+      <svg class="notfound__line" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H1200"/></svg>
+      <p class="lead">Cette page n’existe pas ou a été déplacée.</p>
+      <div class="row" style="--gap:14px 22px">
+        <a class="btn btn--primary btn--big" href="/" data-magnetic><span class="btn__label">Revenir à l’accueil</span></a>
+        <a class="link link--under" href="/enquete-rps-2026.html">L’enquête RPS 2026</a>
+        <a class="link link--under" href="/resultats.html">Résultats et études</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer night cover" id="contact">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <img src="/assets/img/site/logos/logo-ocse-blanc.webp" alt="Observatoire des CSE" width="955" height="172" loading="lazy">
+      <p class="muted">Un outil de mesure régulier et continu des relations sociales dans l’entreprise.</p>
+    </div>
+    <div class="footer__col">
+      <h2>Le site</h2>
+      <a class="link" href="/">Accueil</a>
+      <a class="link" href="/enquete-rps-2026.html">L’enquête RPS 2026</a>
+      <a class="link" href="/resultats.html">Résultats et études</a>
+      <a class="link" href="/#qui">Qui sommes-nous</a>
+    </div>
+    <div class="footer__col">
+      <h2>Participer</h2>
+      <a class="link" href="/enquete-rps-2026.html#inscription">Je participe</a>
+      <button class="link" type="button" data-drawer-open="panel">Devenir panéliste</button>
+      <a class="link" href="/resultats.html#recevoir">Recevoir les résultats</a>
+    </div>
+    <div class="footer__col footer__contact">
+      <h2>Nous écrire</h2>
+      <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+      <button class="btn btn--light footer__write" type="button" data-drawer-open="contact">Écrire un message</button>
+      <p class="muted">Téléphone et adresse postale <span class="tbc">à compléter</span></p>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Observatoire des CSE</span>
+      <a class="link" href="/confidentialite.html">Confidentialité et mentions légales</a>
+      <span>Maquette de démonstration : formulaires simulés, aucun envoi.</span>
+      <button class="calm-inline" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
+    </div>
+  </div>
+</footer>
+
+<p class="sr-only" aria-live="polite" data-live></p>
+<button class="calm-toggle" type="button" data-calm aria-pressed="false"><span class="calm-toggle__sw" aria-hidden="true"></span>Mode calme</button>
+<div class="drawer" id="drawer-panel" data-drawer="panel" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="drawer__top"><p class="eyebrow">Panel de l’Observatoire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="panel-title">Devenez panéliste <em>à l’Observatoire des CSE</em></h2>
+    <p class="muted">Inscrivez-vous pour participer aux prochaines enquêtes. Rôle du panel et fréquence des sollicitations <span class="tbc">à compléter</span></p>
+    <form class="form" data-form="panel" novalidate>
+      <div class="field"><label for="panel-nom">Nom et prénom</label><input id="panel-nom" name="nom" type="text" autocomplete="name"></div>
+      <div class="field"><label for="panel-mandat">Mandat</label>
+        <select id="panel-mandat" name="mandat">
+          <option value="">Choisissez une option</option>
+          <option>Titulaire au CSE</option><option>Suppléant au CSE</option><option>Représentant de proximité</option><option>Membre d’une CSSCT</option><option>Délégué syndical</option><option>Représentant syndical au CSE</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="field"><label for="panel-email">E-mail <span class="req">*</span></label><input id="panel-email" name="email" type="email" autocomplete="email" required inputmode="email"><span class="field__err" hidden></span></div>
+      <div class="fields-2">
+        <div class="field"><label for="panel-effectif">Effectif de l’entreprise</label>
+          <select id="panel-effectif" name="effectif"><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
+        </div>
+        <div class="field"><label for="panel-dep">Département de l’entreprise</label><input id="panel-dep" name="departement" type="text" placeholder="57, Moselle"></div>
+      </div>
+      <div class="field"><label for="panel-secteur">Secteur d’activité de l’entreprise</label>
+        <select id="panel-secteur" name="secteur"><option value="">Choisissez une option</option><option>Industries</option><option>Construction</option><option>Commerce</option><option>Services</option><option>Service public</option><option>Autres</option></select>
+      </div>
+      <p class="sim-note">Listes de choix reprises de l’étude de 2019, à valider par l’Observatoire.</p>
+      <button class="btn btn--primary" type="submit">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci, c’est noté.</h3>
+      <p>Dans la version en ligne, votre inscription au panel serait enregistrée. Ici, rien n’a été envoyé.</p>
+    </div>
+  </div>
+</div>
+<div class="drawer" id="drawer-contact" data-drawer="contact" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <div class="drawer__top"><p class="eyebrow">Nous écrire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="contact-title">Contactez-nous</h2>
+    <div class="copy"><span class="copy__text">contact@observatoiredescse.fr</span><button class="copy__btn" type="button" data-copy="contact@observatoiredescse.fr">Copier</button></div>
+    <form class="form" data-form="contact" novalidate>
+      <div class="fields-2">
+        <div class="field"><label for="contact-prenom">Prénom</label><input id="contact-prenom" name="prenom" type="text" autocomplete="given-name"></div>
+        <div class="field"><label for="contact-nom">Nom de famille</label><input id="contact-nom" name="nom" type="text" autocomplete="family-name"></div>
+      </div>
+      <div class="field"><label for="contact-email">E-mail <span class="req">*</span></label><input id="contact-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+      <div class="field"><label for="contact-objet">Objet</label><input id="contact-objet" name="objet" type="text"></div>
+      <div class="field"><label for="contact-msg">Message <span class="req">*</span></label><textarea id="contact-msg" name="message" rows="5" required data-msg="Écrivez votre message avant d’envoyer."></textarea></div>
+      <button class="btn btn--primary" type="submit" style="align-self:flex-start">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci pour votre message.</h3>
+      <p>Dans la version en ligne, il serait transmis à l’équipe de l’Observatoire. Ici, rien n’a été envoyé.</p>
+      <button class="back" type="button" data-form-reset style="align-self:flex-start">Écrire un autre message</button>
+    </div>
+  </div>
+</div>
+<div class="drawer" id="drawer-avantages" data-drawer="avantages" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="avantages-title">
+    <div class="drawer__top"><p class="eyebrow">Aperçu · après le questionnaire</p><button class="drawer__close" type="button" data-drawer-close>Fermer</button></div>
+    <h2 class="h2" id="avantages-title">Merci pour votre participation, <em class="hl">place aux avantages !</em></h2>
+    <p class="muted" style="margin:0">Cette page s’affiche une fois le questionnaire rempli. Elle ne doit pas être accessible directement depuis le site.</p>
+    <form class="form" data-form="avantages" novalidate>
+      <fieldset class="gifts-pick" data-group-min="1">
+        <legend class="label">Je souhaite bénéficier des avantages gratuits proposés par les partenaires <span class="req">*</span> <span class="muted">(plusieurs choix possibles)</span></legend>
+        <label class="pick" for="av-alinea"><input id="av-alinea" type="checkbox" name="avantages" value="alinea"><img src="/assets/img/site/partenaires/alinea.webp" alt="" width="407" height="155" loading="lazy"><span><b>Alinea</b> · 1 formation de 2 h 30 en distanciel, gratuite (valeur 199 €)</span></label>
+        <label class="pick" for="av-influence"><input id="av-influence" type="checkbox" name="avantages" value="influence"><img src="/assets/img/site/partenaires/influence-cse.webp" alt="" width="151" height="34" loading="lazy"><span><b>Influence!CSE</b> · abonnement d’un an au magazine (valeur 129 €)</span></label>
+        <label class="pick" for="av-eluceo"><input id="av-eluceo" type="checkbox" name="avantages" value="eluceo"><img src="/assets/img/site/partenaires/eluceo.webp" alt="" width="566" height="295" loading="lazy"><span><b>Eluceo</b> · accès VIP au Stade de France pour la restitution des résultats, les 10 et 11 mars 2027</span></label>
+        <span class="field__err" hidden>Choisissez au moins un avantage.</span>
+      </fieldset>
+      <div class="field"><label for="av-nom">Nom et prénom <span class="req">*</span></label><input id="av-nom" name="nom" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="av-mandat">Fonction ou mandat <span class="req">*</span></label><input id="av-mandat" name="mandat" type="text" required></div>
+      <div class="fields-2">
+        <div class="field"><label for="av-email">E-mail <span class="req">*</span></label><input id="av-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+        <div class="field"><label for="av-tel">Téléphone <span class="req">*</span></label><input id="av-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      </div>
+      <div class="field"><label for="av-ent">Nom de l’entreprise <span class="req">*</span></label><input id="av-ent" name="entreprise" type="text" autocomplete="organization" required></div>
+      <div class="field"><label for="av-adr">Adresse complète <span class="req">*</span></label><input id="av-adr" name="adresse" type="text" autocomplete="street-address" required></div>
+      <div class="field"><label for="av-eff">Effectif <span class="req">*</span></label>
+        <select id="av-eff" name="effectif" required><option value="">Choisissez une option</option><option>Moins de 11 salariés</option><option>11 à 49 salariés</option><option>50 à 299 salariés</option><option>300 à 999 salariés</option><option>1 000 à 1 999 salariés</option><option>Plus de 2 000 salariés</option></select>
+      </div>
+      <p class="sim-note">Champs repris de la page actuelle. Tranches d’effectif à valider par l’Observatoire.</p>
+      <button class="btn btn--primary" type="submit" style="align-self:flex-start">Envoyer</button>
+      <p class="sim-note">Maquette : rien n’est envoyé.</p>
+    </form>
+    <div class="success" data-success hidden tabindex="-1">
+      <h3>Merci, vos choix sont notés.</h3>
+      <p>Dans la version en ligne, les partenaires vous recontacteraient pour vos avantages. Ici, rien n’a été envoyé.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

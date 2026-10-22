@@ -147,6 +147,11 @@ export function fillMedia(root = document) {
     el.dataset.filled = '1';
     const name = el.dataset.img, m = el.dataset.imgM;
     const info = IMAGES[name];
+    if (!info && el.dataset.ph === 'monogram') {
+      el.classList.add('monogram');
+      el.innerHTML = `<span class="monogram__i" aria-hidden="true">${el.dataset.initials || ''}</span><span class="ph-tag"><b>${el.dataset.phLabel || 'Photo à fournir'}</b></span>`;
+      return;
+    }
     if (!info) { paintPlaceholder(el, el.dataset.ph || 'room', name, el.dataset.phLabel); return; }
     const deco = el.closest('[aria-hidden="true"]') || el.classList.contains('slide');
     const pic = document.createElement('picture');
@@ -161,6 +166,7 @@ export function fillMedia(root = document) {
     img.decoding = 'async';
     if (!el.closest('.hero, .phero')) img.loading = 'lazy';
     img.width = info.w[info.w.length - 1]; img.height = Math.round(img.width / info.r);
+    if (img.loading === 'lazy') { img.classList.add('is-loading'); const done = () => img.classList.remove('is-loading'); img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
     pic.appendChild(img);
     el.appendChild(pic);
   });

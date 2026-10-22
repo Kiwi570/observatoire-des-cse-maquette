@@ -8,6 +8,12 @@ function S(tag, attrs = {}, parent) {
 }
 const pct = (v) => `${String(v).replace('.', ',')} %`;
 const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+// le texte des SVG garde une taille lisible quand le graphique rétrécit sur téléphone
+const fitText = (svg, vbW) => {
+  const f = () => { const w = svg.getBoundingClientRect().width; if (w) svg.style.setProperty('--fs', Math.min(1.75, Math.max(1, vbW / w)).toFixed(3)); };
+  f(); if ('ResizeObserver' in window) new ResizeObserver(f).observe(svg); else window.addEventListener('resize', f);
+};
+const fs = (px) => `font-size:calc(${px}px * var(--fs, 1))`;
 const onEnter = (el, fn, gsap, calm, start = 'top 82%') => {
   if (calm || !gsap || !window.ScrollTrigger) { fn(true); return; }
   window.ScrollTrigger.create({ trigger: el, start, once: true, onEnter: () => fn(false) });
@@ -23,7 +29,7 @@ export function gauge(el, { gsap, calm }) {
     const a = Math.PI * (1 - v / 100), major = v % 25 === 0, mid = v % 5 === 0;
     const r1 = R + 6, r2 = R + (major ? 22 : mid ? 15 : 10);
     S('line', { x1: cx + Math.cos(a) * r1, y1: cy - Math.sin(a) * r1, x2: cx + Math.cos(a) * r2, y2: cy - Math.sin(a) * r2, style: `stroke:var(--ink);stroke-width:${major ? 1.6 : 1};opacity:${major ? 1 : 0.45}` }, ticks);
-    if (major) { const t = S('text', { x: cx + Math.cos(a) * (R + 38), y: cy - Math.sin(a) * (R + 38) + 4, 'text-anchor': 'middle', style: 'font-family:var(--font-data);font-size:12px;fill:var(--ink-soft)' }, ticks); t.textContent = v; }
+    if (major) { const t = S('text', { x: cx + Math.cos(a) * (R + 38), y: cy - Math.sin(a) * (R + 38) + 4, 'text-anchor': 'middle', style: `font-family:var(--font-data);${fs(12)};fill:var(--ink-soft)` }, ticks); t.textContent = v; }
   }
   const arcR = R - 14, len = Math.PI * arcR;
   const d = `M${cx - arcR} ${cy} A${arcR} ${arcR} 0 0 1 ${cx + arcR} ${cy}`;
@@ -35,6 +41,7 @@ export function gauge(el, { gsap, calm }) {
   S('circle', { cx, cy: cy - (R - 34), r: 4, style: 'fill:var(--coral)' }, needle);
   S('circle', { cx, cy, r: 10, style: 'fill:var(--ink)' }, svg);
   S('circle', { cx, cy, r: 3.5, style: 'fill:var(--paper)' }, svg);
+  fitText(svg, 440);
   const box = document.createElement('div'); box.className = 'gauge__value';
   box.innerHTML = `<span class="gauge__n num"><span data-gn>0</span><small style="font-size:.5em">&nbsp;%</small></span><span class="gauge__cap">${cap}</span>`;
   el.appendChild(box);
@@ -57,8 +64,8 @@ export function gauge(el, { gsap, calm }) {
   return { set: (v) => apply(v, calm) };
 }
 
-/* ---------- barres verticales (avec points de passage de la ligne) ---------- */
-export function vbars(el, data, { gsap, calm, set = 'os', anchors = false, anchorClass = 'pa--d' }) {
+/* ---------- barres verticales ; un point qui bat sur la réponse majoritaire ---------- */
+export function vbars(el, data, { gsap, calm, set = 'os' }) {
   const W = 560, H = 330, base = 250, maxV = 75, plotH = 172, bw = 82;
   const n = data.cats.length, x0 = 24, gap = (W - 2 * x0 - n * bw) / (n - 1);
   const svg = S('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img' }, el);
@@ -68,48 +75,39 @@ export function vbars(el, data, { gsap, calm, set = 'os', anchors = false, ancho
     S('line', { x1: 0, x2: W, y1: y, y2: y, style: `stroke:var(--rule);stroke-dasharray:${v ? '2 4' : 'none'}` }, grid);
     const t = S('text', { x: W, y: y - 6, 'text-anchor': 'end' }, grid); t.textContent = v ? `${v} %` : '';
   });
-  const bars = [], vals = [], labels = [];
+  const cx = (i) => x0 + i * (bw + gap) + bw / 2;
+  const bars = data.cats.map((c, i) => S('rect', { x: cx(i) - bw / 2, width: bw, y: base, height: 0, rx: 3, style: `fill:var(${i === 1 ? '--coral' : '--ink'})` }, svg));
+  const dot = S('circle', { class: 'vb-dot', r: 5, cx: cx(0), cy: base }, svg);
+  const vals = [];
   data.cats.forEach((c, i) => {
-    const x = x0 + i * (bw + gap);
-    const r = S('rect', { x, width: bw, y: base, height: 0, rx: 3, style: `fill:var(${i === 1 ? '--coral' : '--ink'})` }, svg);
-    const tv = S('text', { x: x + bw / 2, y: base - 10, 'text-anchor': 'middle', class: i === 1 ? 't-big' : 't-strong', style: i === 1 ? '' : 'font-size:14px' }, svg);
-    const words = c.split(' '); const tl = S('text', { x: x + bw / 2, y: base + 24, 'text-anchor': 'middle', style: 'font-size:12.5px' }, svg);
-    if (words.length > 1 && c.length > 10) { const a = S('tspan', { x: x + bw / 2 }, tl); a.textContent = words[0]; const b = S('tspan', { x: x + bw / 2, dy: 16 }, tl); b.textContent = words.slice(1).join(' '); }
+    const tv = S('text', { x: cx(i), y: base - 12, 'text-anchor': 'middle', class: `vb-val ${i === 1 ? 't-big' : 't-strong'}`, style: i === 1 ? '' : fs(14) }, svg);
+    const words = c.split(' '); const tl = S('text', { x: cx(i), y: base + 12, 'text-anchor': 'middle', 'dominant-baseline': 'hanging', style: fs(12.5) }, svg);
+    if (words.length > 1 && c.length > 10) { const a = S('tspan', { x: cx(i) }, tl); a.textContent = words[0]; const b = S('tspan', { x: cx(i), dy: '1.25em' }, tl); b.textContent = words.slice(1).join(' '); }
     else tl.textContent = c;
-    bars.push(r); vals.push(tv); labels.push(tl);
+    vals.push(tv);
   });
-  let pas = [];
-  if (anchors) {
-    const box = document.createElement('div'); box.className = 'chart__anchors'; el.appendChild(box);
-    const mk = () => { const i = document.createElement('i'); i.className = `pa ${anchorClass}`; i.setAttribute('data-pulse', ''); i.dataset.pulseAmp = '0'; box.appendChild(i); return i; };
-    pas = [mk(), ...data.cats.map(mk), mk()];
-  }
-  const posAnchors = (heights) => {
-    if (!anchors) return;
-    const tops = heights.map((h) => base - h - 46);
-    pas[0].style.left = `${(-30 / W) * 100}%`; pas[0].style.top = `${(tops[0] / H) * 100}%`;
-    data.cats.forEach((c, i) => { pas[i + 1].style.left = `${((x0 + i * (bw + gap) + bw / 2) / W) * 100}%`; pas[i + 1].style.top = `${(tops[i] / H) * 100}%`; });
-    pas[pas.length - 1].style.left = `${((W + 30) / W) * 100}%`; pas[pas.length - 1].style.top = `${(tops[n - 1] / H) * 100}%`;
-  };
+  fitText(svg, W);
   const hOf = (v) => (v / maxV) * plotH;
+  const hp = data.cats.map(() => ({ h: 0, v: 0 }));
+  const draw = () => {
+    hp.forEach((p, i) => {
+      bars[i].setAttribute('y', base - p.h); bars[i].setAttribute('height', p.h);
+      vals[i].setAttribute('y', base - p.h - 12);
+      vals[i].textContent = p.h > 0.5 ? pct(Math.round(p.v)) : '';
+    });
+    let m = 0; hp.forEach((p, i) => { if (p.h > hp[m].h) m = i; });
+    dot.setAttribute('cx', cx(m)); dot.setAttribute('cy', base - hp[m].h);
+    dot.style.opacity = hp[m].h > 0.5 ? '1' : '0';
+  };
   let current = data[set].slice();
   const apply = (arr, instant, onDone) => {
     svg.setAttribute('aria-label', data.cats.map((c, i) => `${c} ${pct(arr[i])}`).join(', '));
-    const hs = arr.map(hOf);
-    posAnchors(hs);
-    bars.forEach((r, i) => {
-      const h = hs[i];
-      if (instant || !gsap) { r.setAttribute('y', base - h); r.setAttribute('height', h); vals[i].setAttribute('y', base - h - 12); vals[i].textContent = pct(arr[i]); return; }
-      gsap.to(r, { attr: { y: base - h, height: h }, duration: 1.1, ease: 'power3.out', delay: i * 0.08 });
-      gsap.to(vals[i], { attr: { y: base - h - 12 }, duration: 1.1, ease: 'power3.out', delay: i * 0.08 });
-      const o = { v: current[i] }; gsap.to(o, { v: arr[i], duration: 1.1, delay: i * 0.08, ease: 'power3.out', onUpdate: () => { vals[i].textContent = pct(Math.round(o.v)); } });
-    });
+    if (instant || !gsap) { hp.forEach((p, i) => { p.h = hOf(arr[i]); p.v = arr[i]; }); draw(); }
+    else hp.forEach((p, i) => gsap.to(p, { h: hOf(arr[i]), v: arr[i], duration: 1.1, ease: 'power3.out', delay: i * 0.08, onUpdate: draw }));
     current = arr.slice();
     if (onDone) { if (instant || !gsap) onDone(); else gsap.delayedCall(1.4, onDone); }
   };
-  // état initial : positions finales pour la ligne, barres à zéro jusqu'à l'apparition
-  posAnchors(current.map(hOf));
-  vals.forEach((t, i) => { t.textContent = ''; });
+  draw();
   onEnter(el, (instant) => apply(current, instant), gsap, calm, 'top 78%');
   return { set: (name, done) => apply(data[name], calm, done) };
 }
@@ -137,8 +135,8 @@ export function dumbbell(el, data, { gsap, calm }) {
   const ticks = [0, 5, 10, 15, 20];
   el.innerHTML = `<div class="db__axis" aria-hidden="true"><span></span><span class="db__ticks">${ticks.map((t) => `<i style="left:${(t / max) * 100}%">${t} %</i>`).join('')}</span></div>` +
     data.items.map(([label, a, b]) => {
-      const lo = Math.min(a, b), hi = Math.max(a, b);
-      return `<div class="db__row" role="group">
+      const lo = Math.min(a, b), hi = Math.max(a, b), close = hi - lo < 3;
+      return `<div class="db__row${close ? ' is-close' : ''}" tabindex="0">
         <span class="db__label">${label}<span class="sr-only"> : ${pct(a)} avec présence syndicale, ${pct(b)} sans organisation syndicale</span></span>
         <span class="db__track" aria-hidden="true"><span class="db__bar" style="left:${(lo / max) * 100}%;width:${((hi - lo) / max) * 100}%"></span>
         <span class="db__dot db__dot--a" style="left:${(a / max) * 100}%"><b>${pct(a)}</b></span>
@@ -159,7 +157,7 @@ export function dumbbell(el, data, { gsap, calm }) {
 const SERIES_COLORS = ['var(--ink)', 'var(--coral)', '#A9B1C4', 'var(--paper-deep)'];
 export function stacked(el, data, { gsap, calm, colors = SERIES_COLORS, legendEl = null }) {
   if (legendEl) legendEl.innerHTML = data.series.map((s, i) => `<li><i style="background:${colors[i]};${i === 3 ? 'box-shadow:inset 0 0 0 1px var(--rule)' : ''}"></i>${s}</li>`).join('');
-  el.innerHTML = data.rows.map(([label, vals]) => `<div class="st__row"><span class="st__label">${label}</span><span class="st__bar" role="img" aria-label="${label} : ${vals.map((v, i) => `${data.series[i]} ${pct(v)}`).join(', ')}">${vals.map((v, i) => v ? `<span class="st__seg" style="flex-grow:${v};background:${colors[i]};color:${i === 0 ? 'var(--paper)' : 'var(--ink)'}">${v >= 9 ? `<b>${v}</b>` : ''}</span>` : '').join('')}</span></div>`).join('');
+  el.innerHTML = data.rows.map(([label, vals]) => `<div class="st__row"><span class="st__label">${label}</span><span class="st__bar" role="img" aria-label="${label} : ${vals.map((v, i) => `${data.series[i]} ${pct(v)}`).join(', ')}">${vals.map((v, i) => v ? `<span class="st__seg" style="flex-grow:${v};background:${colors[i]};color:${/--ink|--night/.test(colors[i]) ? 'var(--paper)' : 'var(--ink)'}">${v >= 9 ? `<b>${v}</b>` : ''}</span>` : '').join('')}</span></div>`).join('');
   if (!calm && gsap) {
     const bars = el.querySelectorAll('.st__bar');
     gsap.set(bars, { clipPath: 'inset(0 100% 0 0)' });
@@ -183,18 +181,25 @@ export function radar(el, { gsap, calm }) {
     S('line', { x1: cx, y1: cy, x2: cx + Math.cos(a) * R, y2: cy + Math.sin(a) * R, style: 'stroke:var(--rule-night)' }, svg);
     const tx = cx + Math.cos(a) * (R + 22), ty = cy + Math.sin(a) * (R + 22);
     const anchor = Math.abs(Math.cos(a)) < 0.2 ? 'middle' : Math.cos(a) > 0 ? 'start' : 'end';
-    const t = S('text', { x: tx, y: ty + 4, 'text-anchor': anchor, class: 't-strong', style: 'font-size:12px' }, svg);
+    const t = S('text', { x: tx, y: ty + 4, 'text-anchor': anchor, class: 't-strong', style: fs(12) }, svg);
     const words = lab.split(' ');
-    if (lab.length > 16) { const half = Math.ceil(words.length / 2); const a1 = S('tspan', { x: tx }, t); a1.textContent = words.slice(0, half).join(' '); const a2 = S('tspan', { x: tx, dy: 15 }, t); a2.textContent = words.slice(half).join(' '); }
+    if (lab.length > 16) { const half = Math.ceil(words.length / 2); const a1 = S('tspan', { x: tx }, t); a1.textContent = words.slice(0, half).join(' '); const a2 = S('tspan', { x: tx, dy: '1.25em' }, t); a2.textContent = words.slice(half).join(' '); }
     else t.textContent = lab;
   });
   const poly = S('polygon', { points: '', style: 'fill:rgba(255,106,77,.22);stroke:var(--coral);stroke-width:2;stroke-linejoin:round' }, svg);
   const dots = DEMO_AXES.map(() => S('circle', { r: 4, style: 'fill:var(--coral)' }, svg));
+  fitText(svg, W);
+  // sur téléphone, le radar devient une liste de barres
+  const list = document.createElement('ul'); list.className = 'radar-list'; list.setAttribute('aria-hidden', 'true');
+  list.innerHTML = DEMO_AXES.map((lab) => `<li><span>${lab}</span><i><b></b></i></li>`).join('');
+  el.appendChild(list);
+  const fills = list.querySelectorAll('b');
   let cur = DEMO_AXES.map(() => 0);
   const draw = (vals) => {
     const pts = vals.map((v, i) => { const a = -Math.PI / 2 + (i / n) * Math.PI * 2; return [cx + Math.cos(a) * R * v, cy + Math.sin(a) * R * v]; });
     poly.setAttribute('points', pts.map((p) => p.join(',')).join(' '));
     pts.forEach((p, i) => { dots[i].setAttribute('cx', p[0]); dots[i].setAttribute('cy', p[1]); });
+    vals.forEach((v, i) => { fills[i].style.transform = `scaleX(${v})`; });
   };
   const set = (seed) => {
     const r = seeded(seed); const target = DEMO_AXES.map(() => 0.35 + r() * 0.55);
@@ -210,6 +215,7 @@ export function trend(el, { gsap, calm }) {
   const W = 520, H = 230, x0 = 30, x1 = 490, base = 180, years = [2026, 2027, 2028, 2029];
   const svg = S('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Évolution fictive d’une édition à l’autre : seule l’édition 2026 est renseignée' }, el);
   S('line', { x1: x0, x2: x1, y1: base, y2: base, style: 'stroke:var(--rule-night)' }, svg);
+  fitText(svg, W);
   const xs = years.map((y, i) => x0 + (i / (years.length - 1)) * (x1 - x0));
   const path = S('path', { d: `M${xs[0]} 92 C ${xs[1] - 60} 92, ${xs[1] - 40} 120, ${xs[1]} 118 S ${xs[2]} 104, ${xs[2]} 104 S ${xs[3] - 40} 130, ${xs[3]} 126`, style: 'fill:none;stroke:var(--on-night-soft);stroke-width:1.5;stroke-dasharray:4 6' }, svg);
   years.forEach((y, i) => {
