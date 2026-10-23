@@ -26,6 +26,7 @@ export function initOverlays({ gsap, lenis, calm }) {
   let opener = null;
   const openLayer = (el, focusSel) => {
     opener = document.activeElement;
+    el.setAttribute('data-lenis-prevent', ''); // Lenis arrêté bloque la molette et le doigt partout ailleurs
     el.hidden = false; document.documentElement.style.overflow = 'hidden'; lenis?.stop();
     if (gsap && !calm) {
       if (el.classList.contains('drawer')) { gsap.fromTo(el.querySelector('.drawer__panel'), { xPercent: 100 }, { xPercent: 0, duration: 0.7, ease: 'expo.out' }); gsap.fromTo(el.querySelector('.drawer__scrim'), { opacity: 0 }, { opacity: 1, duration: 0.4 }); }
@@ -180,6 +181,9 @@ export function initTransitions({ gsap, calm }) {
       e.preventDefault();
       const host = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
       if (window.__lenis) window.__lenis.scrollTo(host, { duration: 1.4 }); else host.scrollIntoView({ behavior: 'smooth' });
+      // le focus suit la cible (lien d'évitement, « Je participe »…)
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
       history.replaceState(null, '', url.hash);
       return;
     }

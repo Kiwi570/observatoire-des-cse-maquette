@@ -46,6 +46,7 @@ export function gauge(el, { gsap, calm }) {
   box.innerHTML = `<span class="gauge__n num"><span data-gn>0</span><small style="font-size:.5em">&nbsp;%</small></span><span class="gauge__cap">${cap}</span>`;
   el.appendChild(box);
   el.setAttribute('role', 'img');
+  el.setAttribute('aria-label', `${pct(value)} ${cap}`); // nommé dès la création, pas seulement à l'entrée dans l'écran
   const nEl = box.querySelector('[data-gn]');
   let cur = 0;
   const apply = (v, instant) => {
@@ -107,6 +108,7 @@ export function vbars(el, data, { gsap, calm, set = 'os' }) {
     current = arr.slice();
     if (onDone) { if (instant || !gsap) onDone(); else gsap.delayedCall(1.4, onDone); }
   };
+  svg.setAttribute('aria-label', data.cats.map((c, i) => `${c} ${pct(current[i])}`).join(', '));
   draw();
   onEnter(el, (instant) => apply(current, instant), gsap, calm, 'top 78%');
   return { set: (name, done) => apply(data[name], calm, done) };

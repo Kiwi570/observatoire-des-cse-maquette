@@ -326,6 +326,8 @@ function stadiumAnim() {
 function heroIn(pulse, gl) {
   const items = document.querySelectorAll('[data-hero-in]');
   const title = document.querySelector('[data-hero-title]');
+  // la CSS masquait le héros en attendant : GSAP prend le relais (pas de flash visible → masqué → animé)
+  document.documentElement.classList.add('hero-pret');
   if (!motion) { pulse?.revealHero(null); gl?.reveal(null); return; }
   const lines = title && title.classList.contains('hero-title') ? title.querySelectorAll('.l') : [];
   const firstVisit = page === 'home' && store.get('ocse-intro', 'session') !== '1';

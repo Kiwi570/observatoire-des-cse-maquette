@@ -64,6 +64,8 @@ export function initHeroGL(el, { calm = false, imgEl = null, lineEl = null } = {
   let renderer;
   try {
     if (/[?&]nowebgl=1/.test(location.search)) return null;
+    // pas de WebGL : repli sans erreur console d'OGL
+    const essai = document.createElement('canvas'); if (!(essai.getContext('webgl') || essai.getContext('experimental-webgl'))) return null;
     renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio || 1, 1.5), alpha: false, antialias: false, powerPreference: 'low-power' });
     if (!renderer.gl) return null;
   } catch (e) { return null; }
