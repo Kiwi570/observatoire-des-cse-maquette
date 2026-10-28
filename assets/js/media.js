@@ -1,5 +1,5 @@
 /* Images réelles (manifeste data.js) et visuels provisoires dessinés en code. */
-import { IMAGES, IMG_PATH } from './data.js';
+import { IMAGES, IMG_PATH } from './data.js?v=20261028';
 
 const C = { paper: '#F3EEE4', deep: '#E7DFCF', ink: '#13203A', soft: '#46506A', coral: '#FF6A4D', night: '#0D1629', warm: '#FFDDB0' };
 

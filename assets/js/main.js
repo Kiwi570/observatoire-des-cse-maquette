@@ -1,11 +1,11 @@
 /* Observatoire des CSE · maquette « Le Pouls » — chef d'orchestre. */
-import { DATES, RESTITUTION, OUVERTURE, MISE_EN_PLACE, PERCEPTION, REUNIONS, SECTEURS } from './data.js';
-import { fillMedia } from './media.js';
-import { initPulse } from './pulse.js';
-import { gauge, vbars, hbars, dumbbell, stacked, radar, trend, spark, cover } from './charts.js';
-import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, initFab, store } from './ui.js';
-import { initForms } from './forms.js';
-import { initAnon } from './anon.js';
+import { DATES, RESTITUTION, OUVERTURE, MISE_EN_PLACE, PERCEPTION, REUNIONS, SECTEURS } from './data.js?v=20261028';
+import { fillMedia } from './media.js?v=20261028';
+import { initPulse } from './pulse.js?v=20261028';
+import { gauge, vbars, hbars, dumbbell, stacked, radar, trend, spark, cover } from './charts.js?v=20261028';
+import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, initFab, store } from './ui.js?v=20261028';
+import { initForms } from './forms.js?v=20261028';
+import { initAnon } from './anon.js?v=20261028';
 
 const html = document.documentElement;
 const CALM = html.classList.contains('is-calm');
@@ -168,7 +168,7 @@ const heroGLp = (async () => {
   const lens = document.querySelector('[data-hero-gl]');
   if (!lens) return null;
   try {
-    const { initHeroGL } = await import('./heroGL.js');
+    const { initHeroGL } = await import('./heroGL.js?v=20261028');
     const gl = initHeroGL(lens, { calm: !motion, imgEl: lens.querySelector('img'), lineEl: document.querySelector('[data-pulse-hero]') });
     if (gl) lens.classList.add('has-gl');
     return gl;
