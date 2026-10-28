@@ -8,6 +8,9 @@ export { store };
 export function initHeader(lenis) {
   const h = document.querySelector('[data-header]');
   if (!h) return;
+  // hauteur réelle de l’en-tête, réservée en haut des sections épinglées
+  const setH = () => document.documentElement.style.setProperty('--entete-h', `${Math.round(h.getBoundingClientRect().height)}px`);
+  setH(); if ('ResizeObserver' in window) new ResizeObserver(setH).observe(h);
   const onScroll = (y) => { h.classList.toggle('is-solid', y > 30); };
   if (lenis) lenis.on('scroll', ({ scroll }) => onScroll(scroll));
   else window.addEventListener('scroll', () => onScroll(window.scrollY), { passive: true });
@@ -198,11 +201,11 @@ export function initTransitions({ gsap, calm }) {
   window.addEventListener('pageshow', (e) => { if (e.persisted) { pt.classList.remove('is-on'); gsap.set(pt, { yPercent: 100 }); } });
 }
 
-/* bouton « Je participe » flottant sur téléphone, masqué quand un autre appel à participer est visible */
+/* bouton « Je participe » flottant sur téléphone, masqué tant que le héros est visible et quand un autre appel à participer est visible */
 export function initFab() {
   const fab = document.querySelector('[data-fab]');
   if (!fab || !('IntersectionObserver' in window)) return;
-  const watch = [...document.querySelectorAll('[data-cta-watch], #inscription, .footer, .final')];
+  const watch = [...document.querySelectorAll('.hero, .phero, [data-cta-watch], #inscription, .footer, .final')];
   const vis = new Set();
   const update = () => {
     const menuOpen = !document.getElementById('menu')?.hidden;

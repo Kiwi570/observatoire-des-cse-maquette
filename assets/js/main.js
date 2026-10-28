@@ -1,11 +1,11 @@
 /* Observatoire des CSE · maquette « Le Pouls » — chef d'orchestre. */
-import { DATES, RESTITUTION, OUVERTURE, MISE_EN_PLACE, PERCEPTION, REUNIONS, SECTEURS } from './data.js?v=20261028';
-import { fillMedia } from './media.js?v=20261028';
-import { initPulse } from './pulse.js?v=20261028';
-import { gauge, vbars, hbars, dumbbell, stacked, radar, trend, spark, cover } from './charts.js?v=20261028';
-import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, initFab, store } from './ui.js?v=20261028';
-import { initForms } from './forms.js?v=20261028';
-import { initAnon } from './anon.js?v=20261028';
+import { DATES, RESTITUTION, OUVERTURE, MISE_EN_PLACE, PERCEPTION, REUNIONS, SECTEURS } from './data.js?v=20261028-2';
+import { fillMedia } from './media.js?v=20261028-2';
+import { initPulse } from './pulse.js?v=20261028-2';
+import { gauge, vbars, hbars, dumbbell, stacked, radar, trend, spark, cover } from './charts.js?v=20261028-2';
+import { initHeader, initOverlays, initCopy, initCalmToggle, initCursor, initMagnetic, initTilt, initTransitions, initFab, store } from './ui.js?v=20261028-2';
+import { initForms } from './forms.js?v=20261028-2';
+import { initAnon } from './anon.js?v=20261028-2';
 
 const html = document.documentElement;
 const CALM = html.classList.contains('is-calm');
@@ -168,7 +168,7 @@ const heroGLp = (async () => {
   const lens = document.querySelector('[data-hero-gl]');
   if (!lens) return null;
   try {
-    const { initHeroGL } = await import('./heroGL.js?v=20261028');
+    const { initHeroGL } = await import('./heroGL.js?v=20261028-2');
     const gl = initHeroGL(lens, { calm: !motion, imgEl: lens.querySelector('img'), lineEl: document.querySelector('[data-pulse-hero]') });
     if (gl) lens.classList.add('has-gl');
     return gl;
@@ -291,8 +291,9 @@ function parcours() {
     .to(gifts, { x: 0, opacity: 1, stagger: 0.18, duration: 0.5, ease: 'power3.out' }, 5.2)
     .to({}, { duration: 0.6 });
   const total = tl.duration();
+  sec.classList.add('is-pinned');
   ST.create({
-    trigger: sec, start: 'top top', end: () => `+=${window.innerHeight * (MOBILE() ? 1.4 : 1.7)}`, pin: true, scrub: 0.7, animation: tl, anticipatePin: 1,
+    trigger: sec, start: 'top top', end: () => `+=${window.innerHeight * (MOBILE() ? 1.4 : 1.7)}`, pin: true, scrub: 0.7, animation: tl,
     onUpdate: (self) => { const t = self.progress * total; setStep(t < 1.05 ? 0 : t < 2.15 ? 1 : t < 4.75 ? 2 : 3); },
   });
 }
@@ -308,7 +309,7 @@ function anonymiser() {
     // téléphone : pas d'épinglage, la fiche se défait pendant que la section défile
     ST.create({ trigger: sec, start: 'top 55%', end: 'bottom 45%', scrub: 0.6, onUpdate: (self) => a.setProgress(self.progress), onRefresh: () => a.resample() });
   } else {
-    ST.create({ trigger: sec, start: 'top top', end: () => `+=${window.innerHeight}`, pin: true, scrub: 0.6, anticipatePin: 1, onUpdate: (self) => a.setProgress(self.progress * 1.1), onRefresh: () => a.resample() });
+    ST.create({ trigger: sec, start: 'top top', end: () => `+=${window.innerHeight}`, pin: true, scrub: 0.6, onUpdate: (self) => a.setProgress(self.progress * 1.1), onRefresh: () => a.resample() });
   }
 }
 
